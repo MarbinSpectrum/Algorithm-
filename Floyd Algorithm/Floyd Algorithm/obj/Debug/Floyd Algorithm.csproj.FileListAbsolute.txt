@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\Floyd Algorithm\Floyd Algorithm\bin\Debug\Floyd Algorithm.exe
+C:\Users\Administrator\source\repos\Floyd Algorithm\Floyd Algorithm\bin\Debug\Floyd Algorithm.pdb
+C:\Users\Administrator\source\repos\Floyd Algorithm\Floyd Algorithm\obj\Debug\Floyd Algorithm.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\source\repos\Floyd Algorithm\Floyd Algorithm\obj\Debug\Floyd Algorithm.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\Floyd Algorithm\Floyd Algorithm\obj\Debug\Floyd Algorithm.exe
+C:\Users\Administrator\source\repos\Floyd Algorithm\Floyd Algorithm\obj\Debug\Floyd Algorithm.pdb

@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\ListArray\ListArray\bin\Debug\ListArray.exe
+C:\Users\Administrator\source\repos\ListArray\ListArray\bin\Debug\ListArray.pdb
+C:\Users\Administrator\source\repos\ListArray\ListArray\obj\Debug\ListArray.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\source\repos\ListArray\ListArray\obj\Debug\ListArray.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\ListArray\ListArray\obj\Debug\ListArray.exe
+C:\Users\Administrator\source\repos\ListArray\ListArray\obj\Debug\ListArray.pdb

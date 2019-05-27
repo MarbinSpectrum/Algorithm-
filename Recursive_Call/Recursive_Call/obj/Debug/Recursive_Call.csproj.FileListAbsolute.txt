@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\Recursive_Call\Recursive_Call\bin\Debug\Recursive_Call.exe
+C:\Users\Administrator\source\repos\Recursive_Call\Recursive_Call\bin\Debug\Recursive_Call.pdb
+C:\Users\Administrator\source\repos\Recursive_Call\Recursive_Call\obj\Debug\Recursive_Call.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\source\repos\Recursive_Call\Recursive_Call\obj\Debug\Recursive_Call.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\Recursive_Call\Recursive_Call\obj\Debug\Recursive_Call.exe
+C:\Users\Administrator\source\repos\Recursive_Call\Recursive_Call\obj\Debug\Recursive_Call.pdb

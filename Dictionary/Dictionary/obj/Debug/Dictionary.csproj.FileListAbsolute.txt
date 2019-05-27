@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\Dictionary\Dictionary\bin\Debug\Dictionary.exe
+C:\Users\Administrator\source\repos\Dictionary\Dictionary\bin\Debug\Dictionary.pdb
+C:\Users\Administrator\source\repos\Dictionary\Dictionary\obj\Debug\Dictionary.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\source\repos\Dictionary\Dictionary\obj\Debug\Dictionary.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\Dictionary\Dictionary\obj\Debug\Dictionary.exe
+C:\Users\Administrator\source\repos\Dictionary\Dictionary\obj\Debug\Dictionary.pdb

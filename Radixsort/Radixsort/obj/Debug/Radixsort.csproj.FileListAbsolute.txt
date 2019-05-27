@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\Radixsort\Radixsort\bin\Debug\Radixsort.exe
+C:\Users\Administrator\source\repos\Radixsort\Radixsort\bin\Debug\Radixsort.pdb
+C:\Users\Administrator\source\repos\Radixsort\Radixsort\obj\Debug\Radixsort.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\source\repos\Radixsort\Radixsort\obj\Debug\Radixsort.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\Radixsort\Radixsort\obj\Debug\Radixsort.exe
+C:\Users\Administrator\source\repos\Radixsort\Radixsort\obj\Debug\Radixsort.pdb

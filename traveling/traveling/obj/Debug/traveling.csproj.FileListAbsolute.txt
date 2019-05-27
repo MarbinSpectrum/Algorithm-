@@ -1,0 +1,12 @@
+C:\Users\Administrator\source\repos\traveling\traveling\bin\Debug\traveling.exe
+C:\Users\Administrator\source\repos\traveling\traveling\bin\Debug\traveling.pdb
+C:\Users\Administrator\source\repos\traveling\traveling\obj\Debug\traveling.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\source\repos\traveling\traveling\obj\Debug\traveling.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\traveling\traveling\obj\Debug\traveling.exe
+C:\Users\Administrator\source\repos\traveling\traveling\obj\Debug\traveling.pdb
+C:\Users\Ymk\source\repos\C#\traveling\traveling\bin\Debug\traveling.exe
+C:\Users\Ymk\source\repos\C#\traveling\traveling\bin\Debug\traveling.pdb
+C:\Users\Ymk\source\repos\C#\traveling\traveling\obj\Debug\traveling.csprojAssemblyReference.cache
+C:\Users\Ymk\source\repos\C#\traveling\traveling\obj\Debug\traveling.csproj.CoreCompileInputs.cache
+C:\Users\Ymk\source\repos\C#\traveling\traveling\obj\Debug\traveling.exe
+C:\Users\Ymk\source\repos\C#\traveling\traveling\obj\Debug\traveling.pdb

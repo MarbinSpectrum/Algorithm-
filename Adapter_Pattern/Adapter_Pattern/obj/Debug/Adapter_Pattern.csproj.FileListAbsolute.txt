@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\Adapter_Pattern\Adapter_Pattern\bin\Debug\Adapter_Pattern.exe
+C:\Users\Administrator\source\repos\Adapter_Pattern\Adapter_Pattern\bin\Debug\Adapter_Pattern.pdb
+C:\Users\Administrator\source\repos\Adapter_Pattern\Adapter_Pattern\obj\Debug\Adapter_Pattern.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\source\repos\Adapter_Pattern\Adapter_Pattern\obj\Debug\Adapter_Pattern.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\Adapter_Pattern\Adapter_Pattern\obj\Debug\Adapter_Pattern.exe
+C:\Users\Administrator\source\repos\Adapter_Pattern\Adapter_Pattern\obj\Debug\Adapter_Pattern.pdb

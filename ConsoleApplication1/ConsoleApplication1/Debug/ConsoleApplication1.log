@@ -1,0 +1,3 @@
+﻿  ConsoleApplication1.cpp
+c:\users\administrator\source\repos\consoleapplication1\consoleapplication1\consoleapplication1.cpp(1): warning C4067: 전처리기 지시문 다음에 예기치 않은 토큰이 있습니다. 줄 바꿈 문자가 필요합니다.
+LINK : fatal error LNK1104: 'C:\Users\Administrator\source\repos\ConsoleApplication1\Debug\ConsoleApplication1.exe' 파일을 열 수 없습니다.

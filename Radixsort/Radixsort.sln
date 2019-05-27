@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radixsort", "Radixsort\Radixsort.csproj", "{190FE594-3AAB-4DFE-B7D6-B06D6845ACCE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{190FE594-3AAB-4DFE-B7D6-B06D6845ACCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{190FE594-3AAB-4DFE-B7D6-B06D6845ACCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{190FE594-3AAB-4DFE-B7D6-B06D6845ACCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{190FE594-3AAB-4DFE-B7D6-B06D6845ACCE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {80ADCB89-36B2-44D7-8153-0B50F5832235}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\loop\loop\bin\Debug\loop.exe
+C:\Users\Administrator\source\repos\loop\loop\bin\Debug\loop.pdb
+C:\Users\Administrator\source\repos\loop\loop\obj\Debug\loop.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\source\repos\loop\loop\obj\Debug\loop.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\loop\loop\obj\Debug\loop.exe
+C:\Users\Administrator\source\repos\loop\loop\obj\Debug\loop.pdb

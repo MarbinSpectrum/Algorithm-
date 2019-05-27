@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\BFS\BFS\bin\Debug\BFS.exe
+C:\Users\Administrator\source\repos\BFS\BFS\bin\Debug\BFS.pdb
+C:\Users\Administrator\source\repos\BFS\BFS\obj\Debug\BFS.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\source\repos\BFS\BFS\obj\Debug\BFS.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\BFS\BFS\obj\Debug\BFS.exe
+C:\Users\Administrator\source\repos\BFS\BFS\obj\Debug\BFS.pdb

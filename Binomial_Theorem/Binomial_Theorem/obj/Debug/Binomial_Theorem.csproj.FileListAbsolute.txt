@@ -1,0 +1,12 @@
+C:\Users\Administrator\source\repos\Binomial_Theorem\Binomial_Theorem\bin\Debug\Binomial_Theorem.exe
+C:\Users\Administrator\source\repos\Binomial_Theorem\Binomial_Theorem\bin\Debug\Binomial_Theorem.pdb
+C:\Users\Administrator\source\repos\Binomial_Theorem\Binomial_Theorem\obj\Debug\Binomial_Theorem.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\source\repos\Binomial_Theorem\Binomial_Theorem\obj\Debug\Binomial_Theorem.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\Binomial_Theorem\Binomial_Theorem\obj\Debug\Binomial_Theorem.exe
+C:\Users\Administrator\source\repos\Binomial_Theorem\Binomial_Theorem\obj\Debug\Binomial_Theorem.pdb
+C:\Users\Ymk\source\repos\C#\Binomial_Theorem\Binomial_Theorem\bin\Debug\Binomial_Theorem.exe
+C:\Users\Ymk\source\repos\C#\Binomial_Theorem\Binomial_Theorem\bin\Debug\Binomial_Theorem.pdb
+C:\Users\Ymk\source\repos\C#\Binomial_Theorem\Binomial_Theorem\obj\Debug\Binomial_Theorem.csprojAssemblyReference.cache
+C:\Users\Ymk\source\repos\C#\Binomial_Theorem\Binomial_Theorem\obj\Debug\Binomial_Theorem.csproj.CoreCompileInputs.cache
+C:\Users\Ymk\source\repos\C#\Binomial_Theorem\Binomial_Theorem\obj\Debug\Binomial_Theorem.exe
+C:\Users\Ymk\source\repos\C#\Binomial_Theorem\Binomial_Theorem\obj\Debug\Binomial_Theorem.pdb
