@@ -1,0 +1,14 @@
+﻿  Stack.cpp
+c:\users\ymk\source\repos\stack(스택)\stack(스택)\stack.cpp(15): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  c:\users\ymk\source\repos\stack(스택)\stack(스택)\stack.cpp(14): note: 클래스 템플릿 멤버 함수 'void Stack<char>::Push(T)'을(를) 컴파일하고 있습니다.
+          with
+          [
+              T=char
+          ]
+  c:\users\ymk\source\repos\stack(스택)\stack(스택)\stack.cpp(52): note: 컴파일 중인 함수 템플릿 인스턴스화 'void Stack<char>::Push(T)'에 대한 참조를 확인하십시오.
+          with
+          [
+              T=char
+          ]
+  c:\users\ymk\source\repos\stack(스택)\stack(스택)\stack.cpp(51): note: 컴파일 중인 클래스 템플릿 인스턴스화 'Stack<char>'에 대한 참조를 확인하세요.
+  Stack(스택).vcxproj -> C:\Users\Ymk\source\repos\Stack(스택)\Debug\Stack(스택).exe
