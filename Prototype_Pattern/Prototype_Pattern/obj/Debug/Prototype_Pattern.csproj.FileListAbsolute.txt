@@ -1,6 +1,0 @@
-C:\Users\Administrator\source\repos\Prototype_Pattern\Prototype_Pattern\bin\Debug\Prototype_Pattern.exe
-C:\Users\Administrator\source\repos\Prototype_Pattern\Prototype_Pattern\bin\Debug\Prototype_Pattern.pdb
-C:\Users\Administrator\source\repos\Prototype_Pattern\Prototype_Pattern\obj\Debug\Prototype_Pattern.csprojResolveAssemblyReference.cache
-C:\Users\Administrator\source\repos\Prototype_Pattern\Prototype_Pattern\obj\Debug\Prototype_Pattern.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\Prototype_Pattern\Prototype_Pattern\obj\Debug\Prototype_Pattern.exe
-C:\Users\Administrator\source\repos\Prototype_Pattern\Prototype_Pattern\obj\Debug\Prototype_Pattern.pdb

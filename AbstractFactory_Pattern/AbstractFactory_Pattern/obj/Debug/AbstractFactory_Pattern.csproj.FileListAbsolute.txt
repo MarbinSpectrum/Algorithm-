@@ -1,6 +1,0 @@
-C:\Users\Administrator\source\repos\AbstractFactory_Pattern\AbstractFactory_Pattern\bin\Debug\AbstractFactory_Pattern.exe
-C:\Users\Administrator\source\repos\AbstractFactory_Pattern\AbstractFactory_Pattern\bin\Debug\AbstractFactory_Pattern.pdb
-C:\Users\Administrator\source\repos\AbstractFactory_Pattern\AbstractFactory_Pattern\obj\Debug\AbstractFactory_Pattern.csprojResolveAssemblyReference.cache
-C:\Users\Administrator\source\repos\AbstractFactory_Pattern\AbstractFactory_Pattern\obj\Debug\AbstractFactory_Pattern.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\AbstractFactory_Pattern\AbstractFactory_Pattern\obj\Debug\AbstractFactory_Pattern.exe
-C:\Users\Administrator\source\repos\AbstractFactory_Pattern\AbstractFactory_Pattern\obj\Debug\AbstractFactory_Pattern.pdb

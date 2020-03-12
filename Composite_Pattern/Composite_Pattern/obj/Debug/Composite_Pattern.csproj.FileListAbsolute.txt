@@ -1,6 +1,0 @@
-C:\Users\Administrator\source\repos\Composite_Pattern\Composite_Pattern\bin\Debug\Composite_Pattern.exe
-C:\Users\Administrator\source\repos\Composite_Pattern\Composite_Pattern\bin\Debug\Composite_Pattern.pdb
-C:\Users\Administrator\source\repos\Composite_Pattern\Composite_Pattern\obj\Debug\Composite_Pattern.csprojResolveAssemblyReference.cache
-C:\Users\Administrator\source\repos\Composite_Pattern\Composite_Pattern\obj\Debug\Composite_Pattern.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\Composite_Pattern\Composite_Pattern\obj\Debug\Composite_Pattern.exe
-C:\Users\Administrator\source\repos\Composite_Pattern\Composite_Pattern\obj\Debug\Composite_Pattern.pdb
