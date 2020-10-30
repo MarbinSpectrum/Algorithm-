@@ -107,33 +107,20 @@ int UseDigit[100][100000];
 
 void F(int deep, int m)
 {
-	//cout << "---------------------- ";
-	//Debug(deep, m);
-
-	int Next = 0;
-	//한자리추가
-	for (int i = 0; i <= 9; i++)
-	{
 		if (UseDigit[deep][m] + 1 != deep + 1)
 			continue;
+
+	int Next = 0;
+	for (int i = 0; i <= 9; i++)
+	{
 		Next = (DP[deep][m] * M + m) * 10 + i;
 		DP[deep + 1][Next % M] = max(DP[deep + 1][Next % M], Next / M);
 		UseDigit[deep + 1][Next % M] = UseDigit[deep][m] + 1;
-
-		//cout << deep + 1 << " ";
-		//cout << Next % M << " ";
-		//cout << DP[deep + 1][Next % M] * M + Next % M << "\n";
-
 	}
-	if (UseDigit[deep][m] + 1 != deep + 1)
-		return;
+
 	Next = (DP[deep][m] * M + m) * 100 + 11;
 	DP[deep + 1][Next % M] = max(DP[deep + 1][Next % M], Next / M);
 	UseDigit[deep + 1][Next % M] = UseDigit[deep][m] + 1;
-
-	//cout << deep + 1 << " ";
-	//cout << Next % M << " ";
-	//cout << DP[deep + 1][Next % M] * M + Next % M << "\n";
 }
 
 int32_t main()
