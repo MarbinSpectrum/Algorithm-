@@ -1,4 +1,4 @@
-﻿#ifndef _GLIBCXX_NO_ASSERT 
+#ifndef _GLIBCXX_NO_ASSERT 
 #include <cassert> 
 #endif #include <cctype>
 #include <cerrno> 
@@ -107,8 +107,8 @@ int UseDigit[100][100000];
 
 void F(int deep, int m)
 {
-		if (UseDigit[deep][m] + 1 != deep + 1)
-			continue;
+	if (UseDigit[deep][m] + 1 != deep + 1)
+		return;
 
 	int Next = 0;
 	for (int i = 0; i <= 9; i++)
@@ -117,10 +117,10 @@ void F(int deep, int m)
 		DP[deep + 1][Next % M] = max(DP[deep + 1][Next % M], Next / M);
 		UseDigit[deep + 1][Next % M] = UseDigit[deep][m] + 1;
 	}
-
 	Next = (DP[deep][m] * M + m) * 100 + 11;
 	DP[deep + 1][Next % M] = max(DP[deep + 1][Next % M], Next / M);
 	UseDigit[deep + 1][Next % M] = UseDigit[deep][m] + 1;
+
 }
 
 int32_t main()
