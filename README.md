@@ -5,7 +5,9 @@
 
 주로 사용하는 언어는 c++ 입니다.
 
+
+
 # 목표
 꾸준히 문제를 푸는것을 목표로 하고있습니다.
 
-현재는 CodeForce에서 Export를 Solved.ac에서는 다이아티어를 목표로 하고 있습니다.
+현재 [CodeForce](https://codeforces.com/profile/9507ym)에서 Export를 [Solved.ac](https://solved.ac/profile/9507ym)에서는 다이아티어를 목표로 하고 있습니다.
