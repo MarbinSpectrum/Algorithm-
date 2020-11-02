@@ -1,3 +1,5 @@
+![header](https://capsule-render.vercel.app/api?type=rect&color=gradient&height=50&section=header)
+
 # 여기는 뭐하는 곳이죠?
 
 이곳은 제가 공부한 알고리즘을 저장해놓는 저장소입니다.
@@ -23,4 +25,3 @@ https://open.kakao.com/o/g3antjMb
 매일 여기서 나오는 문제들을 풀고 있습니다. 
 
 같이 열심히 공부합시다!! 화이팅!!
-
