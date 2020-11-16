@@ -133,7 +133,7 @@ int Right(int n)
 
     RightDP[n] = t - 1;
     for (int i = n; i < t; i++)
-        RightDP[n] = min(RightDP[n], Right(i));
+        RightDP[n] = max(RightDP[n], Right(i));
     return  RightDP[n];
 }
 
@@ -146,7 +146,7 @@ int Solution(int a, int b)
     if (a > b)
         return DP[a][b] = 0;
 
-    if(RightDP[a] >= b || LeftDP[b] <= a)
+    if (RightDP[a] >= b || LeftDP[b] <= a)
         return DP[a][b] = 1;
 
     DP[a][b] = INF;
@@ -174,10 +174,10 @@ int32_t main()
         cin >> x >> h;
         Block.push_back({ x,h });
     }
-  
+
     sort(Block.begin(), Block.end());
 
-    for (int i = 0; i < N; i++) 
+    for (int i = 0; i < N; i++)
     {
         Left(i);
         Right(i);
