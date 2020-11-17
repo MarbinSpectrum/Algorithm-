@@ -100,44 +100,9 @@ const int Dic[4][2] = { {+1,+0},{-1,+0},{0,+1},{0,-1} };
 
 using namespace std;
 
-int T,N;
+int T, N;
 
-bool Check[1001][1001];
-bool A[1001];
-bool B[1001];
-bool C[1001];
-
-vector<pair<int, int>> Result;
-
-void DFS(int ar,int num)
-{
-    if (num == floor((2 * N + 1) / 3))
-    {
-        for (int i = 0; i < N; i++)
-            for (int j = 0; j <= i; j++)
-                if (Check[i][j])
-                    Result.push_back({ i + 1,j + 1 });
-
-        return;
-    }
-
-
-    for (int r = ar; r < N; r++)
-        for (int c = 0; c <= r; c++)
-            if (!A[r] && !B[c] && !C[r - c])
-            {
-                Check[r][c] = true;
-                A[r] = true;
-                B[c] = true;
-                C[r - c] = true;
-                if (Result.size() <= 0)
-                    DFS(r + 1, num + 1);
-                Check[r][c] = false;
-                A[r] = false;
-                B[c] = false;
-                C[r - c] = false;
-            }
-}
+int B[2000];
 
 int32_t main()
 {
@@ -151,12 +116,85 @@ int32_t main()
     {
         cin >> N;
 
-        Result.clear();
-        DFS(0, 0);
+        cout << floor((2 * N + 1) / 3) << endl;
 
-        cout << Result.size() << endl;
-        for (int i = 0; i < Result.size(); i++)
-            Debug(Result[i].first, Result[i].second);
+        if (N <= 2)
+            Debug(1, 1);
+        else
+        {
+            int Result = 1;
+
+            for (int i = 1; i <= floor((2 * N + 1) / 3); i++)
+            {
+                int a = i;
+                int b = i;
+                while (b != 0)
+                {
+                    B[b] = true;
+                    a++;
+                    b--;
+                }
+
+                bool flag = true;
+
+                int c = i * 2;
+                int d = i * 2 - 1;
+
+                for (int j = 1; j <= floor((2 * N + 1) / 3) - i; j++)
+                {
+                    if (c > N || d < 0)
+                    {
+                        flag = false;
+                        break;
+                    }
+                    if (B[d])
+                    {
+                        flag = false;
+                        break;
+                    }
+                    c++;
+                    d--;
+                }
+
+                if (flag)
+                {
+                    Result = i;
+                    break;
+                }
+
+                a = i;
+                b = i;
+                while (b != 0)
+                {
+                    B[b] = false;
+                    a++;
+                    b--;
+                }
+
+                c = i * 2;
+                d = i * 2 - 1;
+            }
+
+            int a = Result;
+            int b = Result;
+            while (b != 0)
+            {
+                Debug(a, b);
+                a++;
+                b--;
+            }
+
+            int c = Result * 2;
+            int d = Result * 2 - 1;
+
+            for (int j = 1; j <= floor((2 * N + 1) / 3) - Result; j++)
+            {
+                Debug(c, d);
+                c++;
+                d--;
+            }
+
+        }
 
     }
 
