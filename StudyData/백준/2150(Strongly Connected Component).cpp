@@ -1,4 +1,4 @@
-﻿#ifndef _GLIBCXX_NO_ASSERT 
+#ifndef _GLIBCXX_NO_ASSERT 
 #include <cassert> 
 #endif #include <cctype>
 #include <cerrno> 
@@ -109,48 +109,34 @@ const int Dic[4][2] = { {+1,+0},{-1,+0},{0,+1},{0,-1} };
 using namespace std;
 
 int V, E;
-vector<int> A[10001];
-int N[10001];
-int L[10001];
 bool Visit[10001];
-int cnt = 0;
+vector<int> A[10001];
+vector<int> B[10001];
 stack<int> STACK;
 vector<vector<int>> Result;
-void DFS(int n)
+
+void DFS_A(int n)
 {
-    cnt++;
-    STACK.push(n);
-    N[n] = cnt;
-    L[n] = cnt;
     Visit[n] = true;
     for (int i = 0; i < A[n].size(); i++)
     {
         int next = A[n][i];
-        if (!N[next])
-        {
-            DFS(next);
-            L[n] = min(L[n], L[next]);
-        }
-        else if (Visit[next])
-            L[n] = min(L[n], N[next]);
+        if (Visit[next]) continue;
+        DFS_A(next);
     }
+    STACK.push(n);
+}
 
-    if (L[n] == N[n])
+void DFS_B(int n, vector<int>& SCC)
+{
+    Visit[n] = true;
+    SCC.push_back(n);
+    for (int i = 0; i < B[n].size(); i++)
     {
-        vector<int> Arr;
-        while (!STACK.empty())
-        {
-            int p = STACK.top();
-            STACK.pop();
-            Arr.push_back(p);
-            Visit[p] = false;
-            if (n == p)
-                break;
-        }
-        sort(Arr.begin(), Arr.end());
-        Result.push_back(Arr);
-    }
-
+        int next = B[n][i];
+        if (Visit[next]) continue;
+        DFS_B(next, SCC);
+    } 
 }
 
 int32_t main()
@@ -165,11 +151,25 @@ int32_t main()
         int a, b;
         cin >> a >> b;
         A[a].push_back(b);
+        B[b].push_back(a);
     }
 
     for (int i = 1; i <= V; i++)
-        if (!N[i])
-            DFS(i);
+        if (!Visit[i])
+            DFS_A(i);
+
+    Init(Visit, false);
+
+    while (!STACK.empty())
+    {
+        vector<int> temp;
+        int next = STACK.top();
+        STACK.pop();
+        if (Visit[next]) continue;
+        DFS_B(next, temp);
+        sort(temp.begin(), temp.end());
+        Result.push_back(temp);
+    }
 
     sort(Result.begin(), Result.end());
 
@@ -181,5 +181,3 @@ int32_t main()
         cout << "-1\n";
     }
 }
-
-
