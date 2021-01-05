@@ -1,4 +1,4 @@
-﻿#ifndef _GLIBCXX_NO_ASSERT 
+#ifndef _GLIBCXX_NO_ASSERT 
 #include <cassert> 
 #endif #include <cctype>
 #include <cerrno> 
@@ -116,7 +116,9 @@ int GetValue(tuple<int, int, int> t, int e)
     int a = get<0>(t);
     int b = get<1>(t);
     int c = get<2>(t);
-    return max((long long)0, (min(e, c) - a) / b + 1);
+    if (e < a)
+        return 0;
+    return (min(e, c) - a) / b + 1;
 }
 
 int GetArrValue(int e)
