@@ -120,10 +120,26 @@ using namespace std;
 int N;
 
 int DP[1000001];
-int GetNum(string s, int start, int c)
+int GetNum(int n, int start, int c)
 {
-	s = s.substr(start, c);
-	return atoi(s.c_str());
+	int ten = 1;
+	int count = 0;
+	int value = 0;
+	while (n > 0)
+	{
+		if (count >= start && c > 0)
+		{
+			int a = n % 10;
+			value += a * ten;
+			ten *= 10;
+			c--;
+		}
+
+		count++;
+		n /= 10;
+	}
+
+	return value;
 }
 
 int32_t main()
@@ -145,15 +161,14 @@ int32_t main()
 	for (int nn = 10; nn <= 1000000; nn++)
 	{
 		set<int> Set;
-		string temp = to_string(nn);
-		int tt = temp.length();
+		int tt = log10(nn) + 1;
 		for (int i = 1; i < tt; i++)
 		{
 			for (int j = 0; j < tt; j++)
 			{
 				if (j + i > tt)
 					break;
-				int s = GetNum(temp, j, i);
+				int s = GetNum(nn, j, i);
 				if (s == 0)
 					continue;
 				if (Set.find(s) == Set.end())
@@ -172,5 +187,8 @@ int32_t main()
 	int N;
 	cin >> N;
 
-	cout << DP[N] << endl;
+	if (DP[N] != 0)
+		cout << DP[N] << endl;
+	else
+		cout << -1 << endl;
 }
