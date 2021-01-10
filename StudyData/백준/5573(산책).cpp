@@ -1,4 +1,4 @@
-﻿#ifndef _GLIBCXX_NO_ASSERT 
+#ifndef _GLIBCXX_NO_ASSERT 
 #include <cassert> 
 #endif #include <cctype>
 #include <cerrno> 
@@ -121,28 +121,6 @@ int R, C, N;
 int A[1000][1000];
 int B[1000][1000];
 
-void DFS(int r, int c, int stack)
-{
-	if (r < 0 || r >= R || c < 0 || c >= C || stack <= 0)
-		return;
-	B[r][c] += stack;
-	if (stack % 2 == 0)
-	{
-		DFS(r + 1, c, stack / 2);
-		DFS(r, c + 1, stack / 2);
-	}
-	else if(A[r][c] == 0)
-	{
-		DFS(r, c + 1, stack / 2);
-		DFS(r + 1, c, stack / 2 + 1);
-	}
-	else if (A[r][c] == 1)
-	{
-		DFS(r, c + 1, stack / 2 + 1);
-		DFS(r + 1, c, stack / 2);
-	}
-}
-
 void Seek(int r, int c)
 {
 	if (r < 0 || r >= R || c < 0 || c >= C)
@@ -176,8 +154,6 @@ int32_t main()
 	for (int i = 0; i < R; i++)
 		for (int j = 0; j < C; j++)
 			cin >> A[i][j];
-
-	DFS(0, 0, N);
 
 	B[0][0] = N;
 	for (int i = 0; i < R; i++)
