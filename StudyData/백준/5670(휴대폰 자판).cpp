@@ -163,22 +163,43 @@ int T;
 int ans = 0;
 string s;
 int idx = 0;
+
 class Trie
 {
 public:
-	unordered_map<char, Trie*> next;
-	set<string> EndPos;
+	Trie* next[26];
+	//unordered_map<char, Trie*> next;
+	bool EndPos;
+	int size;
+	Trie()
+	{
+		EndPos = false;
+		size = 0;
+		for (int i = 0; i < 26; i++)
+			next[i] = NULL;
+	}
+	~Trie()
+	{
+		for (int i = 0; i < 26; i++)
+			if (next[i])
+				delete next[i];
+	}
 	void Add()
 	{
 		if (idx < s.length())
 		{
 			char nowC = s[idx];
-			if (next.find(nowC) == next.end())
-				next[nowC] = new Trie();
-			if (idx + 1 == s.length() && EndPos.find(s) == EndPos.end())
-				EndPos.insert(s);
+			int nowIdx = nowC - 'a';
+
+			if (!next[nowIdx])
+			{
+				next[nowIdx] = new Trie();
+				size++;
+			}
+			if (idx + 1 == s.length())
+				next[nowIdx]->EndPos = true;
 			idx++;
-			next[nowC]->Add();
+			next[nowIdx]->Add();
 		}
 	}
 	void Find()
@@ -186,14 +207,15 @@ public:
 		if (idx < s.length())
 		{
 			char nowC = s[idx];
-			if (next.size() > 1)
+			int nowIdx = nowC - 'a';
+
+			if (next[nowIdx]->EndPos)
 				ans++;
-			else if (EndPos.size() > 0 && EndPos.find(s) == EndPos.end())
+			else if (idx + 1 < s.length() && next[nowIdx]->size > 1)
 				ans++;
-			else if (idx == 0)
-				ans++;
+
 			idx++;
-			next[nowC]->Find();
+			next[nowIdx]->Find();
 		}
 	}
 };
@@ -203,6 +225,9 @@ int32_t main()
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	std::cout.tie(NULL);
+
+	cout << fixed;
+	cout.precision(2);
 
 	int N;
 	while (cin >> N)
@@ -222,9 +247,9 @@ int32_t main()
 			s = Arr[i];
 			ans = 0;
 			idx = 0;
+
 			trie.Find();
 			sum += ans;
-			cout << ans << endl;
 		}
 		cout << sum / N << endl;
 	}
