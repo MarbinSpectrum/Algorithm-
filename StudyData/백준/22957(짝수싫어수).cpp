@@ -187,25 +187,32 @@ int32_t main()
 	DP[1][5] = 0;
 	DP[1][6] = 0;
 	DP[1][7] = 0;
+	DP[0][0] = 1;
+	DP[0][1] = 0;
+	DP[0][2] = 0;
+	DP[0][3] = 0;
+	DP[0][4] = 0;
+	DP[0][5] = 0;
+	DP[0][6] = 0;
+	DP[0][7] = 0;
 
 	cin >> N >> K;
 
-	int now = 0;
+	int b = 0;
 
+	int now = 0;
 	for (int i = N; i >= 1; i--)
 	{
 		int cnt[3] = { 0, };
-		for(int k = 0; k < 3; k++)
-		for (int j = 0; j < 8; j++)
-			if (now != j)
-				cnt[k] += Dp(i - 1, j ^ (1 << k));
+		for (int k = 0; k < 3; k++)
+			for (int j = 0; j < 8; j++)
+				if (now != j)
+					cnt[k] += Dp(i - 1, j ^ (1 << k));
 
 		for (int j = 0; j < 3; j++)
 		{
 			if (K > cnt[j])
-			{
 				K -= cnt[j];
-			}
 			else
 			{
 				cout << Num[j];
@@ -214,6 +221,6 @@ int32_t main()
 			}
 		}
 	}
-	
+
 	cout << endl;
 }
