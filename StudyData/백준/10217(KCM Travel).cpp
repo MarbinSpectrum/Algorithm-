@@ -183,22 +183,21 @@ int32_t main()
 			int u, v, c, d;
 			cin >> u >> v >> c >> d;
 			V[u].push_back({ d,c,v });
-			V[v].push_back({ d,c,u });
 		}
 
 		memset(Dist, INF, sizeof(Dist));
 
 		Dist[1][0] = 0;
-		priority_queue< tuple<int, int, int>> PQ;
+		priority_queue<tuple<int, int, int>> PQ;
 		PQ.push({ 0,0,1 });
 
 		int ans = INF;
 
 		while (!PQ.empty())
 		{
-			int now = get<2>(PQ.top());
 			int dis = -get<0>(PQ.top());
-			int cost = -get<1>(PQ.top());
+			int cost = get<1>(PQ.top());
+			int now = get<2>(PQ.top());
 
 			PQ.pop();
 
@@ -206,15 +205,17 @@ int32_t main()
 				continue;
 			if (cost > M)
 				continue;
-			if (now == N && ans == INF)
+			if (ans == INF && now == N)
+			{
 				ans = dis;
+				break;
+			}
 
 			for (int i = 0; i < V[now].size(); i++)
 			{
-				int next = get<2>(V[now][i]);
-
 				int nextDis = dis + get<0>(V[now][i]);
 				int nextCost = cost + get<1>(V[now][i]);
+				int next = get<2>(V[now][i]);
 
 				if (nextCost > M)
 					continue;
@@ -222,16 +223,26 @@ int32_t main()
 				if (Dist[next][nextCost] > nextDis)
 				{
 					Dist[next][nextCost] = nextDis;
-					PQ.push({ -nextDis,-nextCost, next });
+
+					for (int j = nextCost; j <= M; j++)
+						if (Dist[next][j] > nextDis)
+							Dist[next][j] = nextDis;
+
+
+
+					PQ.push({ -nextDis,nextCost, next });
 				}
 			}
 		}
+
+		for (int i = 0; i <= M; i++)
+			ans = min(ans, Dist[N][i]);
 
 		if (ans == INF)
 			cout << "Poor KCM" << endl;
 		else
 			cout << ans << endl;
 	}
-	
-	
+
+
 }
