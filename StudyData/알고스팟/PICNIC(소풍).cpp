@@ -160,10 +160,67 @@ const int Dic[4][2] = { {+1,+0},{-1,+0},{0,+1},{0,-1} };
 
 using namespace std;
 
+bool F[10][10];
+bool A[10];
+int cnt = 0;
+int n, m;
+
+void DFS(int a)
+{
+	if (a == n)
+	{
+		cnt++;
+		return;
+	}
+
+	int i = 0;
+	for (; i < n; i++)
+		if (!A[i])
+			break;
+	
+	for (int j = i+1; j < n; j++)
+	{
+		if (i == j)
+			continue;
+		if (F[i][j] && !A[j])
+		{
+			A[i] = true;
+			A[j] = true;			
+			DFS(a + 2);
+			A[i] = false;
+			A[j] = false;
+		}
+	}
+}
+
+void Sol()
+{
+	cin >> n >> m;
+	memset(A, false, sizeof(A));
+	memset(F, false, sizeof(F));
+	cnt = 0;
+	for (int i = 0; i < m; i++)
+	{
+		int a, b;
+		cin >> a >> b;
+		if (a > b)
+			swap(a, b);
+		F[a][b] = true;
+	}
+
+	DFS(0);
+
+	cout << cnt << endl;
+}
+
 int32_t main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	std::cout.tie(NULL);
 
+	int C;
+	cin >> C;
+	while (C--)
+		Sol();
 }
