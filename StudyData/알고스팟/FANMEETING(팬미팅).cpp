@@ -89,9 +89,8 @@
 
 using namespace std;
 
-
 #define endl "\n"
-#define int long long
+//#define int long long
 #define float double
 #define Debug(a,b) cout << a << " " << b << endl
 
@@ -158,62 +157,83 @@ const int Dic[4][2] = { {+1,+0},{-1,+0},{0,+1},{0,-1} };
 
 ////////////////////////////////////////////////////////////////////////
 
-int N, M;
+using namespace std;
 
-class Node
-{
-public :
-	Node(char c);
-	~Node();
-	void Insert(char c, bool& flag);
-	Node* node[4];
-	void Print();
-	void Print2();
-	char color;
-};
-Node::Node(char c)
-: color(c)
-{
-	for (int i = 0; i < 4; i++)
-		node[i] = nullptr;
-}
-Node::~Node()
-{
-	for (int i = 0; i < 4; i++)
-	{
-		delete node[i];
-		node[i] = nullptr;
-	}
-}
-void Node::Insert(char c, bool& flag)
-{
-	for (int i = 0; i < 4 && !flag; i++)
-		if (node[i] == nullptr)
-		{
-			node[i] = new Node(c);
-			flag = true;
-		}
-		else if(node[i]->color == 'x')
-			node[i]->Insert(c,flag);
+vector<int> multiply(const vector<int>& a, const vector<int>& b) {
+	vector<int> c(a.size() + b.size() + 1, 0);
+	for (int i = 0; i < a.size(); i++)
+		for (int j = 0; j < b.size(); j++)
+			c[i + j] += (a[i] * b[j]);
+	return c;
 }
 
-void Node::Print()
-{
-	cout << color;
-	for (int i = 0; i < 4; i++)
-		if (node[i] != nullptr)
-			node[i]->Print();
+void addTo(vector<int>& a, const vector<int>& b, int k) {
+	a.resize(max<int>(a.size(), b.size() + k));
+	for (int i = 0; i < b.size(); i++)
+		a[i + k] += b[i];
 }
-void Node::Print2()
-{
-	cout << color;
-	for (int i = 2; i <= 3; i++)
-		if (node[i] != nullptr)
-			node[i]->Print2();
-	for (int i = 0; i <= 1; i++)
-		if (node[i] != nullptr)
-			node[i]->Print2();
+
+void subFrom(vector<int>& a, const vector<int>& b) {
+	a.resize(max(a.size(), b.size()) + 1);
+	for (int i = 0; i < b.size(); i++)
+		a[i] -= b[i];
 }
+
+vector<int> karatsuba(const vector<int>& a, const vector<int>& b) {
+	int an = a.size(), bn = b.size();
+	if (an < bn)
+		return karatsuba(b, a);
+	if (an == 0 || bn == 0)
+		return vector<int>();
+	if (an <= 50)
+		return multiply(a, b);
+
+	int half = an / 2;
+	vector<int> a0(a.begin(), a.begin() + half);
+	vector<int> a1(a.begin() + half, a.end());
+	vector<int> b0(b.begin(), b.begin() + min<int>(bn, half));
+	vector<int> b1(b.begin() + min<int>(bn, half), b.end());
+
+	vector<int> z2 = karatsuba(a1, b1);
+	vector<int> z0 = karatsuba(a0, b0);
+
+	addTo(a0, a1, 0);
+	addTo(b0, b1, 0);
+
+	vector<int> z1 = karatsuba(a0, b0);
+	subFrom(z1, z0);
+	subFrom(z1, z2);
+
+	vector<int> res;
+	addTo(res, z0, 0);
+	addTo(res, z1, half);
+	addTo(res, z2, half * 2);
+
+	return res;
+}
+
+void Sol()
+{
+	string a, b;
+	cin >> a >> b;
+
+	int N = a.size(), M = b.size();
+	vector<int> A(N), B(M);
+	for (int i = 0; i < N; i++)
+		A[i] = (a[i] == 'M');
+	for (int i = 0; i < M; i++)
+		B[M - i - 1] = (b[i] == 'M');
+
+	vector<int> C = karatsuba(A, B);
+
+	int ans = 0;
+	for (int i = N - 1; i < M; i++)
+		if (C[i] == 0)
+			ans++;
+
+	cout << ans << endl;
+}
+
 int C;
 int32_t main()
 {
@@ -223,16 +243,6 @@ int32_t main()
 
 	cin >> C;
 	while (C--)
-	{
-		string s;
-		cin >> s;
-		Node *root = new Node(s[0]);
-		for (int i = 1; i < s.length(); i++)
-		{
-			bool flag = false;
-			root->Insert(s[i], flag);
-		}
-		root->Print2();
-		cout << endl;
-	}
+		Sol();
+
 }
