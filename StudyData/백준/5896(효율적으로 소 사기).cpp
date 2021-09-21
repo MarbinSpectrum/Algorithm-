@@ -161,46 +161,60 @@ using namespace std;
 
 int N, K, M;
 vector<pair<int, int>> Arr;
-int ans = 0;
-
+priority_queue<pair<int, int>> Q1;
+priority_queue<pair<int, int>> Q2;
+priority_queue<int> pq;
+bool Visit[60000];
 int32_t main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	std::cout.tie(NULL);
 
-	priority_queue<pair<int,int>> Q1;
-	priority_queue<int> Q2;
 	cin >> N >> K >> M;
 	for (int i = 0; i < N; i++)
 	{
 		int a, b;
 		cin >> a >> b;
 		Arr.push_back({ a,b });
-		Q1.push({ -b,i });
 	}
-
-	while (K > 0 && !Q1.empty() && M >= -Q1.top().first)
+	for (int i = 0; i < K; i++)
+		pq.push(0);
+	for (int i = 0; i < N; i++)
 	{
-		M += Q1.top().first;
-		K--;
-		ans++;
-		Q1.pop();
+		Q1.push({ -Arr[i].second, i });
+		Q2.push({ -Arr[i].first, i });
 	}
-
-	while (!Q1.empty())
+	int flag = 0;
+	while (M > 0 && flag < N)
 	{
-		Q2.push(-Arr[Q1.top().second].first);
-		Q1.pop();
-	}
+		while (Visit[Q1.top().second])
+			Q1.pop();
+		while (Visit[Q2.top().second])
+			Q2.pop();
 
-	while (!Q2.empty() && M >= -Q2.top())
-	{
-		M += Q2.top();
-		ans++;
-		Q2.pop();
+		if (-pq.top() + -Q1.top().first < -Q2.top().first)
+		{
+			pair<int, int> temp = Q1.top();
+			int cost = -pq.top() + -temp.first;
+			if (M < cost)
+				break;
+			M -= cost;
+			pq.pop();
+			pq.push(-(Arr[temp.second].first - Arr[temp.second].second));
+			Visit[temp.second] = true;
+		}
+		else
+		{
+			pair<int, int> temp = Q2.top();
+			int cost = -temp.first;
+			if (M < cost)
+				break;
+			M -= cost;
+			Visit[temp.second] = true;
+		}
+		flag++;
 	}
-	
-	cout << ans << endl;
+	cout << flag << endl;
 
 }
