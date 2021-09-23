@@ -15,7 +15,6 @@
 현재 [CodeForce](https://codeforces.com/profile/9507ym)에서 Export를 [Solved.ac](https://solved.ac/profile/9507ym)에서는 루비티어를 목표로 하고 있습니다.
 
 
-
 # 어떻게 공부하나요?
 
 https://open.kakao.com/o/g3antjMb
