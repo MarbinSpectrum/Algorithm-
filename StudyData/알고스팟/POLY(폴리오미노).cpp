@@ -160,7 +160,22 @@ const int Dic[4][2] = { {+1,+0},{-1,+0},{0,+1},{0,-1} };
 using namespace std;
 
 const int MOD = 1000000007;
-int DP[200];
+int DP[300][300];
+
+int Dp(int a, int b)
+{
+	if (a == b)
+		return 1;
+	if (DP[a][b] != -1)
+		return DP[a][b];
+	DP[a][b] = 0;
+	for (int i = 1; i <= a - b; i++)
+	{
+		int mul = i + b - 1;
+		DP[a][b] = (DP[a][b] + (Dp(a - b, i) * mul) % 10000000) % 10000000;
+	}
+	return DP[a][b];
+}
 
 int32_t main()
 {
@@ -168,26 +183,19 @@ int32_t main()
 	cin.tie(NULL);
 	std::cout.tie(NULL);
 
-	DP[0] = DP[1] = 1;
-	for (int i = 2; i < 200; i++)
-		DP[i] = (DP[i - 1] + DP[i - 2]) % MOD;
+	memset(DP, -1, sizeof(DP));
 
 	int C;
 	cin >> C;
 	while (C--)
 	{
+		int ans = 0;
 		int a;
 		cin >> a;
-		int ans = 0;
-		if (a % 2 == 1)
+
+		for (int i = 1; i <= a; i++)
 		{
-			ans = (DP[a] - DP[a / 2] + MOD) % MOD;
-		}
-		else
-		{
-			ans = DP[a];
-			ans = (ans - DP[a / 2] + MOD) % MOD;
-			ans = (ans - DP[a / 2 - 1] + MOD) % MOD;
+			ans = (ans + Dp(a, i)) % 10000000;
 		}
 
 		cout << ans << endl;
