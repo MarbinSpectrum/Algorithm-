@@ -187,10 +187,105 @@ const int Dic[4][2] = { {+1,+0},{-1,+0},{0,+1},{0,-1} };
 
 ////////////////////////////////////////////////////////////////////////
 
+int m, q, n;
+string S[503];
+int A[503];
+float B[503];
+float T[503][503];
+float M[503][503];
+vector<string> str;
+int choice[503][503];
+float DP[503][5013];
+
+void Init()
+{
+	for (int i = 0; i < 503; i++)
+		for (int j = 0; j < 503; j++)
+			DP[i][j] = 1;
+}
+
+float D(int a, int b)
+{
+	if (a == n)
+		return 0;
+	float& ret = DP[a][b];
+	if (ret != 1)
+		return ret;
+	ret = -INF;
+	int& choose = choice[a][b];
+	for (int i = 1; i <= m; i++)
+	{
+		float temp = T[b][i] + M[i][A[a]] + D(a + 1, i);
+		if (ret < temp)
+		{
+			ret = temp;
+			choose = i;
+		}
+	}
+	return ret;
+}
+void F(int a, int b)
+{
+	if (a == n)
+		return;
+
+	int choose = choice[a][b];
+
+	cout << S[choose] << ' ';
+	F(a + 1, choose);
+}
 int32_t main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	std::cout.tie(NULL);
 
+	cin >> m >> q;
+	for (int i = 1; i <= m; i++)
+		cin >> S[i];
+	for (int i = 1; i <= m; i++)
+	{
+		cin >> B[i];
+		B[i] = log(B[i]);
+	}
+	for (int i = 0; i <= m; i++)
+		for (int j = 1; j <= m; j++)
+		{
+			if (i == 0)
+			{
+				T[i][j] = B[j];
+			}
+			else
+			{
+				cin >> T[i][j];
+				T[i][j] = log(T[i][j]);
+			}
+		}
+	for (int i = 1; i <= m; ++i)
+		for (int j = 1; j <= m; ++j)
+		{
+			cin >> M[i][j];
+			M[i][j] = log(M[i][j]);
+		}
+
+	while (q--)
+	{
+		cin >> n;
+		Init();
+		for (int i = 0; i < n; i++)
+		{
+			string s;
+			cin >> s;
+
+			for (int j = 1; j <= m; ++j)
+				if (s == S[j])
+				{
+					A[i] = j;
+					break;
+				}
+		}
+		D(0, 0);
+		F(0, 0);
+		cout << endl;
+	}
 }
