@@ -196,54 +196,140 @@ int32_t main()
 	std::cout.tie(NULL);
 
 	cin >> w >> h >> L;
+	if (L <= h && L <= w)
 	{
-		int a = ((L + 1) * 2 - 1) * ((L + 1) * 2 - 1) - (L + 1) * (L + 1);
-		int b = 0;
 		for (int i = 0; i < L; i++)
 		{
-			b += (L + 1) - (int)sqrt(L * L - i * i);
+			int a = L - i;
+			int b = sqrt(L * L - a * a);
+			ans += b * 2 + 1;
 		}
-		a -= b * 3;
-		ans += a;
+		for (int i = 0; i < L; i++)
+		{
+			int a = i;
+			int b = sqrt(L * L - a * a);
+			ans += b;
+		}
+		cout << ans << endl;
 	}
-	if (h < L)
+	else if (L > h && L <= w)
 	{
+		for (int i = 0; i < L; i++)
+		{
+			int a = L - i;
+			int b = sqrt(L * L - a * a);
+			ans += b * 2 + 1;
+		}
+		for (int i = 0; i < L; i++)
+		{
+			int a = i;
+			int b = sqrt(L * L - a * a);
+			ans += b;
+		}
 		int Lh = L - h;
-		int a = (Lh + 1) * (Lh + 1);
-		int b = 0;
 		for (int i = 0; i < Lh; i++)
 		{
-			b += (Lh + 1) - (int)sqrt(Lh * Lh - i * i);
+			int a = i;
+			int b = sqrt(Lh * Lh - a * a);
+			ans += b;
 		}
-		a -= b;
-		a -= Lh;
-		ans += a;
+		cout << ans << endl;
 	}
-	if (w < L)
+	else if (L <= h && L > w)
+	{
+		for (int i = 0; i < L; i++)
+		{
+			int a = L - i;
+			int b = sqrt(L * L - a * a);
+			ans += b * 2 + 1;
+		}
+		for (int i = 0; i < L; i++)
+		{
+			int a = i;
+			int b = sqrt(L * L - a * a);
+			ans += b;
+		}
+		int Lw = L - w;
+		for (int i = 1; i < Lw; i++)
+		{
+			int a = i;
+			int b = sqrt(Lw * Lw - a * a);
+			ans += b;
+		}
+		ans += Lw;
+		cout << ans << endl;
+	}
+	else if (L > h && L > w && L <= w + h)
 	{
 		int Lw = L - w;
-		int a = (Lw + 1) * (Lw + 1);
-		int b = 0;
+		int Lh = L - h;
+		for (int i = 0; i < L; i++)
+		{
+			int a = L - i;
+			int b = sqrt(L * L - a * a);
+			ans += b * 2 + 1;
+		}
+		for (int i = 0; i < L; i++)
+		{
+			int a = i;
+			int b = sqrt(L * L - a * a);
+			ans += b;
+		}
+
+		for (int i = 0; i < Lh; i++)
+		{
+			int a = i;
+			int b = sqrt(Lh * Lh - a * a);
+			ans += b;
+		}
+
 		for (int i = 0; i < Lw; i++)
 		{
-			b += (Lw + 1) - (int)sqrt(Lw * Lw - i * i);
+			int a = i;
+			int b = sqrt(Lw * Lw - a * a);
+			ans += b;
 		}
-		a -= b;
-		a -= Lw;
-		ans += a;
+
+		cout << ans << endl;
 	}
-	if (L - h - w > 0)
+	else
 	{
-		int a = 0;
-		int b = L - h - 1;
-		for (int i = h + 1; i < L - w; i++)
+		int Lw = L - w;
+		int Lh = L - h;
+		for (int i = 0; i < L; i++)
 		{
-			while (((i - h) * (i - h) + b * b > (L - h) * (L - h)) 
-				|| ((b - w) * (b - w) + i * i > (L - w) * (L - w))) 
-				b--;
-			a += (b - w);
+			int a = L - i;
+			int b = sqrt(L * L - a * a);
+			ans += b * 2 + 1;
 		}
-		ans -= a;
+		for (int i = 0; i < L; i++)
+		{
+			int a = i;
+			int b = sqrt(L * L - a * a);
+			ans += b;
+		}
+		for (int i = 0; i < w; i++)
+		{
+			int a = i;
+			int b = sqrt(Lh * Lh - a * a);
+			ans += b;
+		}
+
+		for (int i = w; i < L; i++)
+		{
+			int a0 = i;
+			int b0 = 0;
+			if (Lh * Lh - a0 * a0 > 0)
+				b0 = sqrt(Lh * Lh - a0 * a0) + h;
+			int a1 = i - w;
+			int b1 = 0;
+			if (Lw * Lw - a1 * a1 > 0)
+				b1 = sqrt(Lw * Lw - a1 * a1);
+			ans += max(b0, b1);
+		}
+		ans += Lw;
+		ans -= h;
+
+		cout << ans << endl;
 	}
-	cout << ans << endl;
 }
