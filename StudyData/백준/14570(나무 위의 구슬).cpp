@@ -187,38 +187,35 @@ const int Dic[4][2] = { {+1,+0},{-1,+0},{0,+1},{0,-1} };
 
 ////////////////////////////////////////////////////////////////////////
 
-int N;
+int N, K;
 pair<int, int> Node[200001];
-int Child[200001];
-int endCnt = 0;
-vector<int> Arr;
-void DFS(int n)
+
+int DFS(int n)
 {
 	if (Node[n].first == -1 && Node[n].second != -1)
 	{
-		Child[Node[n].second]++;
-		DFS(Node[n].second);
+		return DFS(Node[n].second);
 	}
 	else if (Node[n].first != -1 && Node[n].second == -1)
 	{
-		Child[Node[n].first]++;
-		DFS(Node[n].first);
+		return DFS(Node[n].first);
 	}
 	else if (Node[n].first == -1 && Node[n].second == -1)
 	{
-		Arr.push_back(n);
+		return n;
 	}
-	else if (Child[Node[n].first] <= Child[Node[n].second])
+	else if (K % 2 == 0)
 	{
-		Child[Node[n].first]++;
-		DFS(Node[n].first);
+		K = K / 2;
+		return DFS(Node[n].second);
 	}
-	else
+	else if (K % 2 == 1)
 	{
-		Child[Node[n].second]++;
-		DFS(Node[n].second);
+		K = (K / 2 + 1);
+		return DFS(Node[n].first);
 	}
 }
+
 int32_t main()
 {
 	ios_base::sync_with_stdio(false);
@@ -229,22 +226,9 @@ int32_t main()
 	for (int i = 1; i <= N; i++)
 	{
 		cin >> Node[i].first >> Node[i].second;
-		if (Node[i].first == Node[i].second && Node[i].second == -1)
-			endCnt++;
-	}
-	endCnt = Pow(2, Ceil(log2(endCnt)));
-
-	while(endCnt--)
-	{
-		DFS(1);
 	}
 
-	//for (int i = 0; i < Arr.size(); i++)
-	//	cout << Arr[i] << " ";
-	//cout << endl;
-
-	int K;
 	cin >> K;
-	K--;
-	cout << Arr[K % Arr.size()] << endl;
+
+	cout << DFS(1) << endl;
 }
