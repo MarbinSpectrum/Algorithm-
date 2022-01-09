@@ -182,20 +182,18 @@ vector<string> split(string input, vector<char> check)
 	return answer;
 }
 
-const int INF = 0x3f3f3f3f;
+const int INF = 1000000000;
 const int Dic[4][2] = { {+1,+0},{-1,+0},{0,+1},{0,-1} };
 
 ////////////////////////////////////////////////////////////////////////
 
 int N;
 int MAP[1005][1005];
-int Dist[1 << 6][1005][1005];
-int cnt = 1;
-int B[1005][1005];
-pair<int, int> A;
-typedef  pair<int, pair<int, int>> POS;
+int Dist1[6][1005][1005];
+int Dist2[1 << 6][6];
+vector<pair<int, int>> A;
+typedef pair<int, int> POS;
 typedef priority_queue< pair<int, POS>, vector< pair<int, POS>>, greater< pair<int, POS>>> PQ;
-
 int32_t main()
 {
 	ios_base::sync_with_stdio(false);
@@ -209,48 +207,95 @@ int32_t main()
 		for (int j = 0; j < N; j++)
 		{
 			std::cin >> MAP[i][j];
-			if (MAP[i][j] == -1)
+			if (MAP[i][j] <= 0)
 			{
-				A = { i,j };
+				A.push_back({ i,j });
 			}
-			else if (MAP[i][j] == 0)
+			for (int k = 0; k < 6; k++)
 			{
-				B[i][j] = cnt++;
+				Dist1[k][i][j] = INF;
 			}
-			for (int k = 0; k < (1 << 6); k++)
+		}
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		for (int j = 0; j < (1 << 6); j++)
+		{
+			Dist2[j][i] = INF;
+		}
+	}
+
+	for (int i = 0; i < A.size(); i++)
+	{
+		PQ pq;
+		pq.push({ 0,A[i] });
+		Dist1[i][A[i].first][A[i].second] = 0;
+		while (!pq.empty())
+		{
+			POS temp0 = pq.top().second;
+			int temp1 = pq.top().first;
+			pq.pop();
+
+			if (Dist1[i][temp0.first][temp0.second] < temp1)
+				continue;
+			for (int j = 0; j < 4; j++)
 			{
-				Dist[k][i][j] = INF;
+				int ar = temp0.first + Dic[j][0];
+				int ac = temp0.second + Dic[j][1];
+				if (ar < 0 || ar >= N || ac < 0 || ac >= N)
+					continue;
+
+				int add = MAP[ar][ac] == -1 ? 0 : MAP[ar][ac];
+
+				if (Dist1[i][ar][ac] > Dist1[i][temp0.first][temp0.second] + add)
+				{
+					Dist1[i][ar][ac] = Dist1[i][temp0.first][temp0.second] + add;
+					pq.push({ Dist1[i][ar][ac],{ar,ac} });
+				}
 			}
 		}
 	}
 
-	PQ pq;
-	pq.push({ 0,{0,{A.first,A.second}} });
-	Dist[0][A.first][A.second] = 0;
-	while (!pq.empty())
+	//for (int i = 0; i < A.size(); i++)
+	//{
+	//	for (int j = 0; j < N; j++)
+	//	{
+	//		for (int k = 0; k < N; k++)
+	//		{
+	//			cout << Dist[i][j][k] << " ";
+	//		}
+	//		cout << endl;
+	//	}
+	//	cout << endl;
+	//}
+
 	{
-		POS temp0 = pq.top().second;
-		int temp1 = pq.top().first;
-		pq.pop();
-		if (Dist[temp0.first][temp0.second.first][temp0.second.second] < temp1)
-			continue;
-		for (int j = 0; j < 4; j++)
+		PQ pq;
+		pq.push({ 0,{0,0} });
+		Dist2[0][0] = 0;
+		while (!pq.empty())
 		{
-			int ar = temp0.second.first + Dic[j][0];
-			int ac = temp0.second.second + Dic[j][1];
-			int bit = temp0.first | (B[ar][ac] != 0 ? (1 << (B[ar][ac] - 1)) : 0);
-			if (ar < 0 || ar >= N || ac < 0 || ac >= N)
+			int bit = pq.top().second.first;
+			int pos = pq.top().second.second;
+			int cost = pq.top().first;
+			pq.pop();
+
+			if (Dist2[bit][pos] < cost)
 				continue;
 
-			int add = MAP[ar][ac] == -1 ? 0 : MAP[ar][ac];
-			if (Dist[bit][ar][ac] > Dist[temp0.first][temp0.second.first][temp0.second.second] + add)
+			for (int j = 0; j < A.size(); j++)
 			{
-				Dist[bit][ar][ac] = Dist[temp0.first][temp0.second.first][temp0.second.second] + add;
-				pq.push({ Dist[bit][ar][ac],{bit,{ar,ac} } });
+				int add = Dist1[pos][A[j].first][A[j].second];
+				int nb = bit | (1 << j);
+
+				if (Dist2[nb][j] > Dist2[bit][pos] + add)
+				{
+					Dist2[nb][j] = Dist2[bit][pos] + add;
+					pq.push({ Dist2[nb][j],{nb,j} });
+				}
 			}
 		}
 	}
 
-	cout << ((Dist[(1 << (cnt - 1)) - 1][A.first][A.second] == INF) ? 0 : Dist[(1 << (cnt - 1)) - 1][A.first][A.second]) << endl;
-	
+	cout << Dist2[(1 << A.size()) - 1][0] << endl;
 }
