@@ -182,7 +182,7 @@ vector<string> split(string input, vector<char> check)
 	return answer;
 }
 
-const int INF = 1000000000;
+const int INF = 98765432198;
 const int Dic[4][2] = { {+1,+0},{-1,+0},{0,+1},{0,-1} };
 
 ////////////////////////////////////////////////////////////////////////
@@ -195,7 +195,10 @@ int sum(int l, int r)
 {
 	return Sum[r] - Sum[l - 1];
 }
-int DP[1000005];
+
+// n번째 차례에 코인이 0개인 상태에서 가장 큰수
+int DP[500001];
+
 int32_t main()
 {
 	ios_base::sync_with_stdio(false);
@@ -203,9 +206,7 @@ int32_t main()
 	std::cout.tie(NULL);
 
 	std::cin >> N >> M;
-	Arr[0] = 0;
-	Arr2[0] = 0;
-	DP[0] = 0;
+
 	for (int i = 1; i <= N; i++)
 	{
 		cin >> Arr[i];
@@ -220,14 +221,22 @@ int32_t main()
 		Sum[i] = Sum[i - 1] + Arr[i];
 	}
 
+	int maxValue = 0; //이제까지 구한 수 중 가장 큰 수
+
 	for (int i = 1; i <= N; i++)
 	{
-		DP[i] = max(DP[i], DP[i - 1] + Arr[i]);
-		if (i - M >= 0)
-			DP[i] = max(DP[i], DP[i - M] + sum(i - M + 1, i) + Arr2[i]);
-		if (i - M - 1 >= 0)
-			DP[i] = max(DP[i], DP[i - M - 1] + sum(i - M + 1, i) + Arr2[i] - Arr[i - M - 1]);
-		cout << DP[i] << endl;
+		int temp = (i < M) ? -INF : (DP[i - M] + sum(i - M + 1, i) + Arr2[i]);
+
+		DP[i] = max(temp, maxValue - Arr[i]);
+		if (temp >= maxValue + Arr[i])
+		{
+			maxValue = temp;
+		}
+		else
+		{
+			maxValue += Arr[i];
+		}
 	}
-	cout << DP[N] << endl;
+
+	cout << max(DP[N], maxValue) << endl;
 }
