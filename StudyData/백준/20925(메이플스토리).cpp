@@ -187,30 +187,10 @@ const int Dic[4][2] = { {+1,+0},{-1,+0},{0,+1},{0,-1} };
 
 ////////////////////////////////////////////////////////////////////////
 
-int DP[201][1001];
+int DP[1001][201];
 int N, T;
-map<int, int> MAP;
 pair<int, int> Arr[201];
 int Dist[201][201];
-int Dp(int a, int t)
-{
-	int& ret = DP[a][t];
-	if (ret != -1)
-		return ret;
-	ret = 0;
-	int nowExp = Arr[a].first;
-	for (int i = 1; i <= N; i++)
-	{
-		int dist = Dist[a][i];
-		int requireExp = 0;
-		requireExp = max(requireExp, Arr[i].first - nowExp);
-		int costTime = Ceil(requireExp, Arr[a].second);
-		if (t >= dist)
-		{
-
-		}
-	}
-}
 int32_t main()
 {
 	ios_base::sync_with_stdio(false);
@@ -220,21 +200,50 @@ int32_t main()
 	memset(DP, -1, sizeof(DP));
 
 	std::cin >> N >> T;
-	for (int i = 1; i <= N; i++)
+	for (int i = 0; i < N; i++)
 	{
 		int c, e;
 		std::cin >> c >> e;
 		Arr[i] = { c,e };
+		if (c == 0)
+		{
+			DP[0][i] = 0;
+		}
 	}
-	for (int i = 1; i <= N; i++)
+	for (int i = 0; i < N; i++)
 	{
-		for (int j = 1; j <= N; j++)
+		for (int j = 0; j < N; j++)
 		{
 			std::cin >> Dist[i][j];
 		}
 	}
 
-	DP[0][T] = 0;
+	for (int t = 1; t <= T; t++)
+	{
+		for (int e = 0; e < N; e++)
+		{
+			if (DP[t - 1][e] != -1)
+				DP[t][e] = max(DP[t][e], DP[t - 1][e] + Arr[e].second);
+			for (int s = 0; s < N; s++)
+			{
+				int temp = t - Dist[s][e];
+				if (s == e || temp < 0)
+					continue;
+				if (DP[temp][s] != -1 && DP[temp][s] >= Arr[e].first)
+					DP[t][e] = max(DP[t][e], DP[temp][s]);
+			}
+		}
+	}
 
-
+	int ans = 0;
+	for (int i = 0; i <= T; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
+			//cout << DP[i][j] << " ";
+			ans = max(ans, DP[i][j]);
+		}
+		//cout << endl;
+	}
+	cout << ans << endl;
 }
