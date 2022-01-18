@@ -248,7 +248,7 @@ int32_t main()
 		int b = Arr[i].second.second;
 		int dist = Arr[i].first;
 		int findDist = FindDist(a, b);
-		//ÇöÀç°¥¼öÀÕ´Â °æ·Î°¡ ¾ø°Å³ª,   ÇöÀç°æ·Î°¡ distº¸´Ù Å¬¶§ ==> °£¼±Ãß°¡
+		//í˜„ì¬ê°ˆìˆ˜ì‡ëŠ” ê²½ë¡œê°€ ì—†ê±°ë‚˜,   í˜„ì¬ê²½ë¡œê°€ distë³´ë‹¤ í´ë•Œ ==> ê°„ì„ ì¶”ê°€
 		if (findDist == INF || findDist > dist)
 		{
 			V[a].push_back({ dist,b });
@@ -256,12 +256,12 @@ int32_t main()
 			ans.push_back({ dist,{a,b} });
 			Visit[a][b] = Visit[b][a] = true;
 		}
-		//ÇöÀç°æ·Î°¡ dist¿Í °°´Ù => Ãß°¡ÇÒÇÊ¿ä°¡ ¾ø´Ù.
+		//í˜„ì¬ê²½ë¡œê°€ distì™€ ê°™ë‹¤ => ì¶”ê°€í• í•„ìš”ê°€ ì—†ë‹¤.
 		else if (findDist == dist) 
 		{
 			continue;
 		}
-		//ÀÏ¾î³¯¼ö ¾ø´Â Çö»óÀÌ´Ù 
+		//ì¼ì–´ë‚ ìˆ˜ ì—†ëŠ” í˜„ìƒì´ë‹¤ 
 		else if (findDist < dist)
 		{
 			cout << 0 << endl;
@@ -286,7 +286,7 @@ int32_t main()
 	{
 		for (int i = 1; i <= N; i++)
 		{
-			for (int j = 1; j <= N; j++)
+			for (int j = i+1; j <= N; j++)
 			{
 				if (Visit[i][j] == Visit[j][i] && Visit[i][j] == false)
 				{
