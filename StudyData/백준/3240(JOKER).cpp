@@ -189,10 +189,8 @@ const int Dic[4][2] = { {+1,+0},{-1,+0},{0,+1},{0,-1} };
 
 ////////////////////////////////////////////////////////////////////////
 
-int N, K; 
-vector<pair<int,int>> Arr;
-
-
+int N, K;
+vector<pair<int, int>> Arr;
 
 int32_t main()
 {
@@ -207,21 +205,21 @@ int32_t main()
 		std::cin >> a >> b;
 		Arr.push_back({ a,b });
 	}
-	sort(Arr.begin(), Arr.end(), [](pair<int, int> a, pair<int, int> b) -> bool 
+	sort(Arr.begin(), Arr.end(), [](pair<int, int> a, pair<int, int> b) -> bool
 		{
-			if (a.second == b.second)
-				return a.first > b.first;
-			else
+			if (a.first == b.first)
 				return a.second > b.second;
+			else
+				return a.first > b.first;
 		});
 	for (int i = 0; i < K; i++)
 	{
-		int len = Arr[i].second - Arr[i].first + 1;
-		if (N < Arr[i].second || N < len)
+		if (N <= Arr[i].second)
 		{
 			std::cout << -1 << endl;
 			return 0;
 		}
+		int len = Arr[i].second - Arr[i].first + 1;
 		N -= len;
 	}
 	if (N != 1)
