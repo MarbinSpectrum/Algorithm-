@@ -189,29 +189,195 @@ const int Dic[4][2] = { {+1,+0},{-1,+0},{0,+1},{0,-1} };
 
 ////////////////////////////////////////////////////////////////////////
 
-int N, K; 
-
-vector<int> A[20];
-int B[4][2] = { {1,1},{2,5},{5,2},{8,8} };
-int C[3] = { 0,1,8 };
-vector<int> Arr;
-int ReverseNum[10] = { 0,1,5,-1,-1,2,-1,-1,8,-1 };
-int Reverse(int a)
+int DP[20];
+int Dp(int a, int b = 0)
 {
-	int b = 0;
+	if (a == 0)
+		return 1;
+	if (a == 1)
+		return 3;
+	return Dp(a - 2, 1) * (4 + b);
+}
+int DP1[20][2];
+int baseNum = 0;
+int Reverse[10] = { 0,1,5,-1,-1,2,-1,-1,8,-1 };
+bool ReverseCC(int a)
+{
+	int b = a;
+	int r = 0;
 	while (a > 0)
 	{
-		b *= 10;
-		int ra = ReverseNum[a % 10];
-		if (ra == -1)
-			return -1;
-		b += ra;
+		int temp = Reverse[a % 10];
+		if (temp == -1)
+			return false;
+		r *= 10;
+		r += temp;
 		a /= 10;
 	}
-	return b;
+	return b == r;
+}
+int CheckReverseNum(int a, int b)
+{
+	int sum = 0;
+	for (int i = a; i <= b; i++)
+	{
+		if (ReverseCC(i))
+		{
+			//cout << i << endl;
+			sum++;
+		}
+	}
+	return sum;
+	//cout << sum << endl;
 }
 
-	int ans = 0;
+int CheckCan(int center)
+{
+	int a = baseNum;
+	bool odd = ((int)log10(baseNum) + 1) % 2 == 1;
+
+	vector<int> arr;
+	int tt = ((int)log10(baseNum) + 1) / 2;
+	for (int i = 0; i < tt; i++)
+	{
+		int t = log10(a) - i;
+		int f = a - (a / Pow(10, t + 1)) * Pow(10, t + 1) - a % Pow(10, t);
+		f /= Pow(10, t);
+		arr.push_back(f);
+	}
+
+	int result = 0;
+
+	while (arr.size() < tt)
+		arr.push_back(0);
+
+	for (int i = 0; i < tt; i++)
+	{
+		result *= 10;
+		result += arr[i];
+	}
+	if (odd)
+	{
+		result *= 10;
+		result += center;
+	}
+	for (int i = tt - 1; i >= 0; i--)
+	{
+		result *= 10;
+		result += Reverse[arr[i]];
+	}
+
+	//cout << "!!!";
+	//Debug(baseNum, result);
+	if (baseNum >= result)
+		return 0;
+	else
+		return 1;
+}
+int Dp1(int a, int b, int aa, int c = 0)
+{
+	if (DP1[a][aa] != -1)
+		return DP1[a][aa];
+
+	int f = baseNum - (baseNum / Pow(10, b + 1)) * Pow(10, b + 1) - baseNum % Pow(10, b);
+	f /= Pow(10, b);
+	int bb = b - 1;
+
+	if (a == 0)
+	{
+		if (aa == 0)
+		{
+			//cout << CheckCan(0) << endl;
+			return CheckCan(0);
+		}
+	}
+	else if (a == 1)
+	{
+		if (aa == 0)
+		{
+			if (f <= 0)
+				return CheckCan(0) + 2;
+			else if (f <= 1)
+				return CheckCan(1) + 1;
+			else if (f <= 8)
+				return CheckCan(8);
+		}
+	}
+
+	//cout << "!";
+	//Debug(b, f);
+
+	if (f <= 0)
+	{
+		if (aa == 1)
+			return DP1[a][aa] = Dp1(a - 2, bb, aa, 1) * (4 + c);
+		else
+			return DP1[a][aa] = Dp1(a - 2, bb, aa, 1) * c + Dp1(a - 2, bb, 1, 1) * 4;
+	}
+	else if (f <= 1)
+	{
+		if (aa == 1)
+			return  DP1[a][aa] = Dp1(a - 2, bb, aa, 1) * (4 + c);
+		else
+			return  DP1[a][aa] = Dp1(a - 2, bb, aa, 1) + Dp1(a - 2, bb, 1, 1) * 3;
+	}
+	else if (f <= 2)
+	{
+		if (aa == 1)
+			return  DP1[a][aa] = Dp1(a - 2, bb, aa, 1) * (4 + c);
+		else if (f < 2)
+			return  DP1[a][aa] = Dp1(a - 2, bb, 1, 1) * 3;
+		else if (f == 2)
+			return  DP1[a][aa] = Dp1(a - 2, bb, aa, 1) + Dp1(a - 2, bb, 1, 1) * 2;
+	}
+	else if (f <= 5)
+	{
+		if (aa == 1)
+			return  DP1[a][aa] = Dp1(a - 2, bb, aa, 1) * (4 + c);
+		else if (f < 5)
+			return  DP1[a][aa] = Dp1(a - 2, bb, 1, 1) * 2;
+		else if (f == 5)
+			return  DP1[a][aa] = Dp1(a - 2, bb, aa, 1) + Dp1(a - 2, bb, 1, 1);
+	}
+	else if (f <= 8)
+	{
+		if (aa == 1)
+			return  DP1[a][aa] = Dp1(a - 2, bb, aa, 1) * (4 + c);
+		else if (f < 8)
+			return  DP1[a][aa] = Dp1(a - 2, bb, 1, 1);
+		else if (f == 8)
+			return  DP1[a][aa] = Dp1(a - 2, bb, aa, 1);
+	}
+	else if (aa == 1)
+	{
+		return  DP1[a][aa] = Dp1(a - 2, bb, aa, 1) * (4 + c);
+	}
+	else
+		return 0;
+}
+int F(int a)
+{
+	memset(DP1, -1, sizeof(DP1));
+	DP1[0][1] = 1;
+	DP1[1][1] = 3;
+
+	baseNum = a;
+	if (a == 0)
+		return 1;
+	if (a < 0)
+		return 0;
+	int result = 0;
+	int t = log10(a);
+	t++;
+
+	for (int i = 1; i <= t; i++)
+		result += Dp(i);
+	//Debug(result, Dp1(t, t-1, 0));
+	result -= Dp1(t, t - 1, 0);
+
+	return result;
+}
+
 int32_t main()
 {
 	ios_base::sync_with_stdio(false);
@@ -220,69 +386,19 @@ int32_t main()
 
 	int AA, BB;
 	std::cin >> AA >> BB;
+	//cout << CheckReverseNum(AA,BB) << endl;
+	cout << F(BB) - F(AA - 1) << endl;
 
-	for (int i = AA; i <= BB; i++)
-	{
-		if (i == Reverse(i))
-		{
-			cout << i << endl;
-			ans++;
-		}
-	}
-	cout << ans << endl;
-	ans = 0;
+	//for (int i = 0; i <= 10000; i++)
+	//{
+	//	for (int j = 0; j <= i; j++)
+	//	{
+	//		if (F(i) - F(j - 1) != CheckReverseNum(j, i))
+	//		{
+	//			Debug(j, i);
+	//			return 0;
+	//		}
+	//	}
 
-	A[1].push_back(0);
-	A[1].push_back(1);
-	A[1].push_back(8);
-
-	A[2].push_back(11);
-	A[2].push_back(25);
-	A[2].push_back(52);
-	A[2].push_back(88);
-
-	for (int i = 3; i <= 17; i++)
-	{
-		for (int l = 2; i - l >= 0; l += 2)
-		{
-			for (int j = 0; j < A[i - l].size(); j++)
-			{
-				int t = Pow(10, i - 1);
-				{
-					for (int k = 0; k < 4; k++)
-					{
-						int a0 = t * B[k][0] + A[i - l][j] * 10 + B[k][1];
-						A[i].push_back(a0);
-
-						if (A[i - l][j] != 0)
-						{
-							int a1 = t * B[k][0] + B[k][1];
-							A[i].push_back(a1);
-						}
-					}
-				}
-			}
-		}
-	}
-
-	for (int i = 1; i <= 17; i++)
-	{
-		for (int j = 0; j < A[i].size(); j++)
-		{
-			Arr.push_back(A[i][j]);
-		}
-	}
-
-	sort(Arr.begin(), Arr.end());
-
-	for (int i = 0; i < Arr.size(); i++)
-	{
-		if (AA <= Arr[i] && Arr[i] <= BB)
-		{
-			ans++;
-			cout << Arr[i] << endl;
-		}
-	}
-
-	std::cout << ans << endl;
+	//}
 }
