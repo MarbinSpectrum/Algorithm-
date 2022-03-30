@@ -195,23 +195,16 @@ map<int, int> A_map;
 int A_Back[500001];
 
 int Q;
-vector<pair<int,int>> Query[500001];
+vector<pair<int, int>> Query[500001];
 
 int ans[500001];
 
 int SegArr[500001];
-int Segment[1000000];
-int Seg(int l, int r,int node)
-{
-	if (l >= r)
-		return SegArr[l];
-	int m = (l + r) / 2;
-	Segment[node] = max(Seg(l, m, node * 2), Seg(m + 1, r, node * 2 + 1));
-	return Segment[node];
-}
+int Segment[10000000];
+
 void Update(int l, int r, int idx, int val, int node)
 {
-	if (l >= r)
+	if (l == r)
 	{
 		SegArr[l] = val;
 		Segment[node] = val;
@@ -226,22 +219,22 @@ void Update(int l, int r, int idx, int val, int node)
 	{
 		Update(m + 1, r, idx, val, node * 2 + 1);
 	}
-	Segment[node] = max(Segment[node*2], Segment[node*2+1]);
+	Segment[node] = max(Segment[node * 2], Segment[node * 2 + 1]);
 }
-int Get(int l, int r, int s, int e,int node)
+int Get(int l, int r, int s, int e, int node)
 {
 	int m = (l + r) / 2;
-	if (l <= s && e <= r)
+	if (s <= l && r <= e)
 	{
-		return max(Get(l, m, s, e, node * 2), Get(m + 1, r, s, e, node * 2 + 1));
+		return Segment[node];
 	}
-	else if(e < l || s > r)
+	else if (r < s || l > e)
 	{
-		return -1;
+		return 0;
 	}
 	else
 	{
-		return Segment[node];
+		return max(Get(l, m, s, e, node * 2), Get(m + 1, r, s, e, node * 2 + 1));
 	}
 }
 
@@ -262,6 +255,11 @@ int32_t main()
 		A_Back[i] = A_map[A[i]];
 		A_map[A[i]] = i;
 	}
+	//for (int i = 0; i < N; i++)
+	//{
+	//	cout << A_Back[i] << " ";
+	//}
+	//cout << endl;
 
 	std::cin >> Q;
 	for (int i = 0; i < Q; i++)
@@ -283,13 +281,13 @@ int32_t main()
 			//Debug(Back_idx, len);
 			Update(0, N - 1, Back_idx, len, 1);
 		}
-		for (int j = 0; j < N; j++)
-			cout << SegArr[j] << " ";
-		cout << endl;
+		//for (int j = 0; j < N; j++)
+		//	cout << SegArr[j] << " ";
+		//cout << endl;
 		for (int j = 0; j < Query[i].size(); j++)
 		{
-			ans[Query[i][j].second] = Get(0, N - 1, Query[i][j].first, i,1);
-			Debug(Query[i][j].second, ans[Query[i][j].second]);
+			ans[Query[i][j].second] = Get(0, N - 1, Query[i][j].first, i, 1);
+			//Debug(Query[i][j].second, ans[Query[i][j].second]);
 		}
 	}
 	for (int i = 0; i < Q; i++)
