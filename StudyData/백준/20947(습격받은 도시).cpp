@@ -190,11 +190,87 @@ const int Dic[4][2] = { {0,1},{0,-1},{1,0},{-1,0} };
 
 ////////////////////////////////////////////////////////////////////////
 
+int N;
+char MAP[3000][3000];
+int State[3000][3000][4];
+
+bool Escape(int r, int c)
+{
+	if (r < 0 || c < 0 || r >= N || c >= N)
+		return true;
+	return false;
+}
+
+void Init(int r, int c, int dic)
+{
+	int nowState = 0;
+	// 0 빈공간
+	// 1 벽
+	// 2 터진벽
+	for (int i = 0; i < N; i++)
+	{
+		if (MAP[r][c] == '.')
+		{
+			int ar = r - Dic[dic][0];
+			int ac = c - Dic[dic][1];
+			if (Escape(ar, ac))
+				nowState = 0;
+			else
+			{
+				if (MAP[ar][ac] == 'O')
+					nowState = 1;
+				else if (MAP[ar][ac] == 'X')
+					nowState = 2;
+			}
+			State[r][c][dic] = nowState;
+		}
+
+		r += Dic[dic][0];
+		c += Dic[dic][1];
+	}
+}
+
+bool IsBoom(int r, int c)
+{
+	for (int i = 0; i < 4; i++)
+		if (State[r][c][i] == 1)
+			return false;
+	return true;
+}
+
 int32_t main()
 {
 	ios_base::sync_with_stdio(false);
 	std::cin.tie(NULL);
 	std::cout.tie(NULL);
 
-	
+	std::cin >> N;
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
+			std::cin >> MAP[i][j];
+		}
+	}
+
+	for (int i = 0; i < N; i++)
+		Init(i, 0, 0);
+	for (int i = 0; i < N; i++)
+		Init(i, N - 1, 1);
+	for (int i = 0; i < N; i++)
+		Init(0, i, 2);
+	for (int i = 0; i < N; i++)
+		Init(N - 1, i, 3);
+
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
+			if (MAP[i][j] == '.' && IsBoom(i, j))
+				cout << "B";
+			else
+				cout << MAP[i][j];
+		}
+		cout << endl;
+	}
 }
