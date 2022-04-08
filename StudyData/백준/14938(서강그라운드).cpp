@@ -193,21 +193,41 @@ const int Dic[4][2] = { {0,1},{0,-1},{1,0},{-1,0} };
 int n, m, r;
 vector<pair<int, int>> V[101];
 int t[101];
+int Dist[101];
 
-bool Visit[101];
-int GetItem(int a,int b)
+int GetItem(int a)
 {
-	int result = t[a];
-	for (int i = 0; i < V[a].size(); i++)
+	for (int i = 1; i <= n; i++)
+		Dist[i] = INF;
+
+	int result = 0;
+
+	priority_queue<pair<int, int>> Q;
+	Q.push({ 0,a });
+	Dist[a] = 0;
+
+	while (!Q.empty())
 	{
-		int nb = b + V[a][i].second;
-		if (Visit[V[a][i].first])
+		int now = Q.top().second;
+		int deep = -Q.top().first;
+		Q.pop();
+
+		if (Dist[now] < deep)
 			continue;
-		if (nb > m)
-			continue;
-		Visit[V[a][i].first] = true;
-		result += GetItem(V[a][i].first, nb);
+
+		for (int i = 0; i < V[now].size(); i++)
+		{
+			int next = V[now][i].first;
+			if (Dist[next] <= deep + V[now][i].second)
+				continue;
+			Q.push({ -(deep + V[now][i].second) ,next });
+			Dist[next] = deep + V[now][i].second;
+		}
 	}
+
+	for (int i = 1; i <= n; i++)
+		if (Dist[i] <= m)
+			result += t[i];
 	return result;
 }
 
@@ -232,9 +252,6 @@ int32_t main()
 
 	int ans = 0;
 	for (int i = 1; i <= n; i++)
-	{
-		memset(Visit, false, sizeof(Visit));
-		ans = max(ans, GetItem(i,0));
-	}
+		ans = max(ans, GetItem(i));
 	std::cout << ans << endl;
 }
