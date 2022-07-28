@@ -11,87 +11,87 @@ using namespace std;
 const int INF = 999999999999999;
 const int Dic[4][2] = { {0,1},{0,-1},{1,0},{-1,0} };
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////// 
 
-int Q;
-vector<tuple<int, int, int>> Query1;
-map<int, vector<pair<int,pair<int, int>>>> Query2;
-
-int N = 0;
-map<int, int> Idx;
-int Num[200000];
-int Tree[3000000];
-int TreeC[3000000];
-int Lazy[3000000];
-
-int Sum(int node, int s, int e, int l, int r)
+struct Node
 {
-	if (Lazy[node] != 0)
+	Node* left;
+	Node* right;
+	int v;
+	int lazy;
+	Node()
+		: left(NULL)
+		, right(NULL)
+		, v(0)
+		, lazy(0)
 	{
-		Tree[node] += (Num[e] - Num[s] + 1) * Lazy[node];
-		if (s != e)
-		{
-			Lazy[node * 2] += Lazy[node];
-			Lazy[node * 2 + 1] += Lazy[node];
-		}
-		Lazy[node] = 0;
 	}
+	void push(int s, int e)
+	{
+		if (lazy == 0)
+			return;
+		v += lazy * (e - s + 1);
+		if (s == e)
+		{
+			lazy = 0;
+			return;
+		}
+		if (left == NULL)
+			left = new Node();
+		if (right == NULL)
+			right = new Node();
+		left->lazy += lazy;
+		right->lazy += lazy;
+		lazy = 0;
+	}
+};
+Node* root;
+
+long long Sum(Node* node, int s, int e, int l, int r)
+{
+	if (node == NULL)
+		return 0;
+
+	node->push(s, e);
+
 	if (l > e || r < s)
 		return 0;
 
 	if (l <= s && e <= r)
-	{
-		cout << "+(" << node << ")";
-		cout << Tree[node] << endl;
-		return Tree[node];
-	}
+		return node->v;
 
-	int add = 0;
-	if (!((s <= l && r <= (s + e) / 2) || ((s + e) / 2 + 1 <= l && r <= e)))
-	{
-		cout << "++(" << node << ")";
-		cout << TreeC[node] << endl;
-		add = TreeC[node];
-	}
-
-	return Sum(node * 2, s, (s + e) / 2, l, r)
-		+ Sum(node * 2 + 1, (s + e) / 2 + 1, e, l, r) + add;
+	return Sum(node->left, s, (s + e) / 2, l, r) +
+		Sum(node->right, (s + e) / 2 + 1, e, l, r);
 }
 
-void Update(int node, int s, int e,int l, int r, int add)
+void Update(Node* node, int s, int e, int l, int r, int add)
 {
-	if (Lazy[node] != 0)
-	{
-		Tree[node] += (Num[e] - Num[s] + 1) * Lazy[node];
-		if (s != e)
-		{
-			Lazy[node * 2] += Lazy[node];
-			Lazy[node * 2 + 1] += Lazy[node];
-		}
-		Lazy[node] = 0;
-	}
+	node->push(s, e);
 
 	if (l > e || r < s)
 		return;
+
 	if (l <= s && e <= r)
 	{
-		Tree[node] += (Num[e] - Num[s] + 1) * add;
-		//cout << (Num[e] - Num[s] + 1) * add << endl;
-		if (s != e)
-		{
-			Lazy[node * 2] += add;
-			Lazy[node * 2 + 1] += add;
-		}
+		node->lazy += add;
+		node->push(s, e);
 		return;
 	}
 
-	TreeC[node] += (Num[(s + e) / 2 + 1] - Num[(s + e) / 2] - 1) * add;
+	if (node->left == NULL)
+		node->left = new Node();
+	if (node->right == NULL)
+		node->right = new Node();
 
-	Update(node * 2, s, (s + e) / 2, l, r, add);
-	Update(node * 2 + 1, (s + e) / 2 + 1, e, l, r, add);
+	Update(node->left, s, (s + e) / 2, l, r, add);
+	Update(node->right, (s + e) / 2 + 1, e, l, r, add);
 
-	Tree[node] = Tree[node * 2] + Tree[node * 2 + 1] + TreeC[node];
+	node->v = node->left->v + node->right->v;
 }
+
+int N;
+vector<pair<int, pair<int, tuple<int, int, int>>>> Query;
+vector<pair<int, int>> Ans;
 
 int32_t main()
 {
@@ -99,62 +99,50 @@ int32_t main()
 	std::cin.tie(NULL);
 	std::cout.tie(NULL);
 
-	std::cin >> Q;
-
-	set<int> num;
-
-	for (int i = 0; i < Q; i++)
+	root = new Node();
+	std::cin >> N;
+	int cnt = 0;
+	for (int i = 0; i < N; i++)
 	{
 		int a, b, c, d;
 		std::cin >> a >> b >> c >> d;
 
-		if (num.find(b) == num.end())
-			num.insert(b);
-		if (num.find(c) == num.end())
-			num.insert(c);
-
 		if (a == 1)
 		{
-			Query1.push_back({ b,c,d });
+			cnt++;
+			Query.push_back({ cnt ,{a,{b,c,d}} });
 		}
-		else if (a == 2)
+		else
 		{
-			Query2[d].push_back({ i,{ b,c } });
+			Query.push_back({ d ,{a,{b,c,i}} });
 		}
 	}
 
-	for (set<int>::iterator iter = num.begin(); iter != num.end(); iter++)
-	{
-		N++;
-		Idx[*iter] = N;
-		Num[N] = *iter;
-		//cout << *iter << " ";
-	}
-	cout << endl;
+	sort(Query.begin(), Query.end());
 
-	for (int i = 0; i < Query1.size(); i++)
+	for (int i = 0; i < N; i++)
 	{
-		int b = get<0>(Query1[i]);
-		int c = get<1>(Query1[i]);
-		int d = get<2>(Query1[i]);
-		cout << "!";
-		cout << Idx[b] << " " << Idx[c] << endl;
-		cout << b << " " << c << endl << endl;
-		Update(1, 1, N, Idx[b], Idx[c], d);
-		if (Query2.find(i+1) != Query2.end())
+		if (Query[i].second.first == 1)
 		{
-			vector<pair<int, pair<int, int>>>& li = Query2[i+1];
-
-			for (int j = 0; j < li.size(); j++)
-			{
-				b = li[j].second.first;
-				c = li[j].second.second;
-				cout << "@";
-				cout << Idx[b] << " " << Idx[c] << endl;
-				cout << b << " " << c << endl;
-				std::cout << Sum(1, 1, N, Idx[b], Idx[c]) << endl << endl;
-			}
+			int s = get<0>(Query[i].second.second);
+			int e = get<1>(Query[i].second.second);
+			int add = get<2>(Query[i].second.second);
+			Update(root, 1, INF, s, e, add);
 		}
+		else
+		{
+			int s = get<0>(Query[i].second.second);
+			int e = get<1>(Query[i].second.second);
+			int sum = Sum(root, 1, INF, s, e);
+			Ans.push_back({ get<2>(Query[i].second.second),sum });
+		}
+	}
+
+	sort(Ans.begin(), Ans.end());
+
+	for (int i = 0; i < Ans.size(); i++)
+	{
+		std::cout << Ans[i].second << endl;
 	}
 
 }
