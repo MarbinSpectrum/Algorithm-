@@ -13,41 +13,11 @@ const int Dic[4][2] = { {0,1},{0,-1},{1,0},{-1,0} };
 
 //////////////////////////////////////////////////////////////////////// 
 
-struct Node
-{
-	Node* left;
-	Node* right;
-	int deep;
-	int value;
-	Node()
-	: left(NULL)
-	, right(NULL)
-	, deep(0)
-	, value(0)
-	{
-	}
-};
-vector<Node*> Arr;
+map<int,int> Map;
+int size = 0;
 
-int MakeV(Node* node)
+void D(const string& s, int d)
 {
-	return (node->value)* (1 << (node->deep));
-}
-
-int C(const Node* node,int v)
-{
-	if (node->left != NULL && node->right != NULL)
-	{
-		return C(node->left, v / 2) + C(node->right, v / 2);
-	}
-	else
-	{
-		return (node->value != v);		
-	}
-}
-void D(const string& s,Node* node, int d)
-{
-	node->deep = d;
 	int st = 0;
 	int p = -1;
 	for (int i = 0; i < s.length(); i++)
@@ -56,7 +26,8 @@ void D(const string& s,Node* node, int d)
 			st++;
 		else if (s[i] == ']')
 			st--;
-		else if (s[i] == ',' && st == 1)
+        
+        	if (s[i] == ',' && st == 1)
 		{
 			p = i;
 			break;
@@ -65,31 +36,29 @@ void D(const string& s,Node* node, int d)
 
 	if (p == -1)
 	{
-		node->value = std::stol(s);
-		Arr.push_back(node);
+		int num = stol(s);
+        	size++;
+		Map[num<<d]++;
 	}
 	else
 	{
-		node->left = new Node();
-		node->right = new Node();
-		D(s.substr(1, p - 1), node->left, d + 1);
-		D(s.substr(p + 1, s.length() - p - 2), node->right, d + 1);
+		D(s.substr(1, p - 1), d + 1);
+		D(s.substr(p + 1, s.length() - p - 2), d + 1);
 	}
 }
 void F()
 {
+    	Map.clear();
+    	size = 0;
 	std::string s;
 	std::cin >> s;
 
-	Node* now = new Node();
-
-	D(s, now, 0);
+	D(s, 0);
 
 	int ans = INF;
-	for (int i = 0; i < Arr.size(); i++)
+	for (auto mp : Map)
 	{
-		int V = MakeV(Arr[i]);
-		ans = min(ans,C(now, V));
+		ans = min(ans,size - mp.second);
 	}
 
 	std::cout << ans << endl;
