@@ -1,0 +1,38 @@
+﻿  RedBlackTree.cpp
+D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\RedBlackTree\RedBlackTree.cpp(40,1): warning C4812: 사용되지 않는 선언 스타일입니다. 대신 'Node<T>::Node'을(를) 사용하십시오.
+D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\RedBlackTree\RedBlackTree.cpp(100,1): warning C4812: 사용되지 않는 선언 스타일입니다. 대신 'RedBlackTree<T>::RedBlackTree'을(를) 사용하십시오.
+D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\RedBlackTree\RedBlackTree.cpp(100,1): warning C4812: 사용되지 않는 선언 스타일입니다. 대신 'RedBlackTree<int>::RedBlackTree'을(를) 사용하십시오.
+D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\RedBlackTree\RedBlackTree.cpp(101): message : 클래스 템플릿 멤버 함수 'RedBlackTree<int>::RedBlackTree(void)'을(를) 컴파일하는 중입니다.
+D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\RedBlackTree\RedBlackTree.cpp(284): message : 컴파일되는 함수 템플릿 인스턴스화 'RedBlackTree<int>::RedBlackTree(void)'에 대한 참조를 확인하세요.
+D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\RedBlackTree\RedBlackTree.cpp(284): message : 컴파일되는 클래스 템플릿 인스턴스화 'RedBlackTree<int>'에 대한 참조를 확인하세요.
+D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\RedBlackTree\RedBlackTree.cpp(40,1): warning C4812: 사용되지 않는 선언 스타일입니다. 대신 'Node<T>::Node'을(를) 사용하십시오.
+          with
+          [
+              T=int
+          ]
+D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\RedBlackTree\RedBlackTree.cpp(41): message : 클래스 템플릿 멤버 함수 'Node<T>::Node(T,bool)'을(를) 컴파일하는 중입니다.
+          with
+          [
+              T=int
+          ]
+D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\RedBlackTree\RedBlackTree.cpp(111): message : 컴파일되는 함수 템플릿 인스턴스화 'Node<T>::Node(T,bool)'에 대한 참조를 확인하세요.
+          with
+          [
+              T=int
+          ]
+D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\RedBlackTree\RedBlackTree.cpp(111): message : 컴파일되는 클래스 템플릿 인스턴스화 'Node<T>'에 대한 참조를 확인하세요.
+          with
+          [
+              T=int
+          ]
+D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\RedBlackTree\RedBlackTree.cpp(107): message : 클래스 템플릿 멤버 함수 'void RedBlackTree<int>::InsertData(T)'을(를) 컴파일하는 중입니다.
+          with
+          [
+              T=int
+          ]
+D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\RedBlackTree\RedBlackTree.cpp(285): message : 컴파일되는 함수 템플릿 인스턴스화 'void RedBlackTree<int>::InsertData(T)'에 대한 참조를 확인하세요.
+          with
+          [
+              T=int
+          ]
+  RedBlackTree.vcxproj -> D:\Program Files\Git\Algorithm\StudyData\RedBlackTree\Debug\RedBlackTree.exe
