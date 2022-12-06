@@ -71,7 +71,7 @@ int32_t main()
 
     if (v0 != N)
     {
-        std::cout << "NO" << endl;
+        std::cout << "No" << endl;
         return 0;
     }
 
@@ -79,10 +79,10 @@ int32_t main()
 
     if (v1 != N)
     {
-        std::cout << "NO" << endl;
+        std::cout << "No" << endl;
         return 0;
     }
 
-    std::cout << "YES" << endl;
+    std::cout << "Yes" << endl;
 
 }
