@@ -19,7 +19,7 @@ const int Dic[8][2] = { {0,1},{0,-1},{1,0},{-1,0} ,{1,1},{-1,-1},{1,-1},{-1,1} }
 int Len[601];
 int Cnt[601];
 int Arr[601];
-int N,K;
+int N, K;
 
 int GetLen(int a)
 {
@@ -42,7 +42,7 @@ int GetCnt(int a)
     ret = 0;
     for (int i = a + 1; i < N; i++)
         if (Arr[a] < Arr[i] && GetLen(a) - 1 == GetLen(i))
-            ret = min((int)3000000000, ret + GetCnt(i));
+            ret = min((int)100000000000, ret + GetCnt(i));
     return ret;
 }
 
@@ -93,6 +93,7 @@ void F()
     for (int i = 0; i < N; i++)
         maxLen = max(maxLen, GetLen(i));
 
+    std::cout << maxLen << endl;
     List1.clear();
     for (int i = 0; i < N; i++)
         if (GetLen(i) == maxLen)
@@ -110,7 +111,7 @@ int32_t main()
 
     int C;
     std::cin >> C;
-    while(C--)
+    while (C--)
         F();
 
 }
