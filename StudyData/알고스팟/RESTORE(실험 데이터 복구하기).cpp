@@ -74,9 +74,9 @@ int GetOverLapSize(string leftStr, string rightStr)
     return res;
 }
 
+
 int DP[1 << 16][16];
-int NextStr[16];
-int Dp(int bit,int tailIdx)
+int Dp(int bit, int tailIdx)
 {
     int& ret = DP[bit][tailIdx];
     if (ret != -1)
@@ -84,26 +84,47 @@ int Dp(int bit,int tailIdx)
         return ret;
     }
 
-    bool flag = true;
+    if (bit == (1 << N) - 1)
+    {
+        return ret = 0;
+    }
     ret = INF;
     for (int i = 0; i < N; i++)
     {
-        if ((bit & (1 << i)) > 0)
+        if (bit & (1 << i))
             continue;
-        flag = false;
+
         int addLen = Arr[i].length() - OverLapLen[tailIdx][i];
         int next = Dp((bit | (1 << i)), i) + addLen;
         if (ret > next)
         {
             ret = next;
-            NextStr[tailIdx] = i;
         }
     }
-    if (flag)
-    {
-        ret = 0;
-    }
     return ret;
+}
+string MakeStr(int bit, int tailIdx)
+{
+    if (bit == (1 << N) - 1)
+    {
+        return "";
+    }
+    for (int i = 0; i < N; i++)
+    {
+        if (bit & (1 << i))
+            continue;
+        int len = Dp(bit | (1 << i), i) + Arr[i].length() - OverLapLen[tailIdx][i];
+        if (len == Dp(bit, tailIdx))
+        {
+            string str = "";
+            for (int j = OverLapLen[tailIdx][i]; j < Arr[i].length(); j++)
+            {
+                str += Arr[i][j];
+            }
+            return str + MakeStr(bit | (1 << i), i);
+        }
+    }
+    return "";
 }
 
 int32_t main()
@@ -123,11 +144,7 @@ int32_t main()
 
         for (int i = 0; i < (1 << 16); i++)
             for (int j = 0; j < 16; j++)
-                for (int k = 0; k < 16; k++)
-                    DP[i][j] = -1;
-
-        for (int i = 0; i < 16; i++)
-                NextStr[i] = -1;
+                DP[i][j] = -1;
 
         int tempN;
         std::cin >> tempN;
@@ -139,13 +156,13 @@ int32_t main()
             tempArr.push_back(str);
         }
 
-        sort(tempArr.begin(), tempArr.end(), [](string a, string b) 
-            { 
-                if (a.length() > b.length()) 
+        sort(tempArr.begin(), tempArr.end(), [](string a, string b)
+            {
+                if (a.length() > b.length())
                 {
                     return true;
                 }
-                else 
+                else
                 {
                     return false;
                 }
@@ -178,35 +195,15 @@ int32_t main()
         int resultSize = INF;
         for (int i = 0; i < N; i++)
         {
-            for (int i = 0; i < (1 << 16); i++)
-                for (int j = 0; j < 16; j++)
-                    for (int k = 0; k < 16; k++)
-                        DP[i][j] = -1;
-
-            for (int i = 0; i < 16; i++)
-                NextStr[i] = -1;
-
-            int res = Dp((1 << i), i) + Arr[i].length();
-            if (resultSize > res)
+            string resStr = Arr[i] + MakeStr(1 << i, i);
+            if (resultSize > resStr.length())
             {
-                resultSize = res;
-                string resStr = Arr[i];
-
-                int idx = i;
-                for (int j = 0; j < N-1; j++)
-                {
-                    int f = idx;
-                    int e = NextStr[idx];
-                    for (int j = OverLapLen[f][e]; j < Arr[e].length(); j++)
-                        resStr += Arr[e][j];
-                    idx = e;
-                }
-
+                resultSize = resStr.length();
                 ans = resStr;
             }
         }
 
         std::cout << ans << endl;
     }
-    
+
 }
