@@ -20,25 +20,23 @@ int N, K, M;
 int L[50];
 float T[50][50];
 int likeSong[50];
-float IMatrix[205][205];
 float W[205][205];
-float BaseMat[205][205];
 float MultiTemp[205][205];
-float ansDP[205][205];
 
 void MultiMatrix(float A[205][205], float B[205][205], float Result[205][205])
 {
-    for (int i = 0; i < 205; i++)
-        for (int j = 0; j < 205; j++)
+    for (int i = 0; i < N * 4; i++)
+        for (int j = 0; j < N * 4; j++)
+        {
             MultiTemp[i][j] = 0;
-
-    for (int i = 0; i < 205; i++)
-        for (int j = 0; j < 205; j++)
-            for (int k = 0; k < 205; k++)
+            for (int k = 0; k < N * 4; k++)
                 MultiTemp[i][j] += A[i][k] * B[k][j];
 
-    for (int i = 0; i < 205; i++)
-        for (int j = 0; j < 205; j++)
+
+        }
+
+    for (int i = 0; i < N * 4; i++)
+        for (int j = 0; j < N * 4; j++)
             Result[i][j] = MultiTemp[i][j];
 }
 
@@ -51,34 +49,28 @@ void PowMatrix(float A[205][205], int n)
     }
     else if (n == 1)
     {
-        for (int i = 0; i < 205; i++)
-            for (int j = 0; j < 205; j++)
+        for (int i = 0; i < N * 4; i++)
+            for (int j = 0; j < N * 4; j++)
                 PowTemp[i][j] = A[i][j];
-    }
-    else if (n % 2 == 0)
-    {
-        PowMatrix(A, n / 2);
-        MultiMatrix(PowTemp, PowTemp, PowTemp);
     }
     else
     {
         PowMatrix(A, n / 2);
         MultiMatrix(PowTemp, PowTemp, PowTemp);
-        MultiMatrix(A, PowTemp, PowTemp);
+
+        if (n % 2 != 0)
+            MultiMatrix(A, PowTemp, PowTemp);
     }
 }
 
 void F()
-{ 
-    for (int i = 0; i < 205; i++)
+{
+    for (int i = 0; i < N * 4; i++)
     {
-        for (int j = 0; j < 205; j++)
+        for (int j = 0; j < N * 4; j++)
         {
-            IMatrix[i][j] = 0;
             W[i][j] = 0;
-            BaseMat[i][j] = 0;
             MultiTemp[i][j] = 0;
-            ansDP[i][j] = 0;
         }
     }
 
@@ -87,12 +79,9 @@ void F()
         std::cin >> L[i];
     for (int i = 0; i < N; i++)
         for (int j = 0; j < N; j++)
-            std::cin >> T[i][j];  
+            std::cin >> T[i][j];
     for (int i = 0; i < M; i++)
         std::cin >> likeSong[i];
-
-    for (int i = 0; i < N * 4; i++)
-        IMatrix[i][i] = 1;
 
     for (int i = 0; i < 3 * N; i++)
         W[i][i + N] = 1;
@@ -100,18 +89,13 @@ void F()
         for (int j = 0; j < N; j++)
             W[3 * N + i][(4 - L[j]) * N + j] = T[j][i];
 
-    BaseMat[3 * N][0] = 1;
-
     PowMatrix(W, K);
-    MultiMatrix(PowTemp, BaseMat, ansDP);
 
     for (int i = 0; i < M; i++)
     {
         float sum = 0;
         for (int j = 0; j < L[likeSong[i]]; j++)
-        {
-            sum += ansDP[N * (3 - j) + likeSong[i]][0];
-        }
+            sum += PowTemp[N * (3 - j) + likeSong[i]][3 * N];
         std::cout << sum << " ";
     }
     std::cout << endl;
