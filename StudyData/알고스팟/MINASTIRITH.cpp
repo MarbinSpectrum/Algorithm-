@@ -16,63 +16,81 @@ const int Dic[8][2] = { {0,1},{0,-1},{1,0},{-1,0} ,{1,1},{-1,-1},{1,-1},{-1,1} }
 
 //////////////////////////////////////////////////////////////////////// 
 
-bool Used[101];
 int N;
-struct Point
-{
-    float x, y, r;
-    Point(float pX, float pY, float pR)
-    : x(pX)
-    , y(pY)
-    , r(pR)
-    {
-    }
-};
-
-vector<Point> points;
-int maxRpointIdx()
-{
-    int maxValue = -1;
-    int idx = -1;
-    for (int i = 0; i < N; i++)
-    {
-        if (points[i].r > maxValue)
-        {
-            maxValue = points[i].r;
-            idx = i;
-        }
-    }
-    return idx;
-}
-int maxRpointIdx(float lx, float ly, float rx, float ry)
-{
-    int maxValue = -1;
-    int idx = -1;
-    for (int i = 0; i < N; i++)
-    {
-        if (points[i].r > maxValue)
-        {
-            maxValue = points[i].r;
-            idx = i;
-        }
-    }
-    return idx;
-}
-void DFS(float lx, float ly, float rx, float ry)
-{
-
-}
+vector<pair<float, float>> lens;
 
 void F()
 {
+    lens.clear();
     std::cin >> N;
     for (int i = 0; i < N; i++)
     {
         float x, y, r;
         std::cin >> x >> y >> r;
-        points.emplace_back(x, y, r);
+
+        float Ry = r / 2.;
+        float Rx = sqrt(64 - Ry * Ry);
+        float angle = (float)(57.295779513082323 * atan2(Ry, Rx)) * 4;
+        float bAngle = (float)(57.295779513082323 * atan2(y, x));
+
+        if (bAngle < 0)
+            bAngle = bAngle + 360;
+
+        float sAngle = bAngle - angle / 2.0;
+        float eAngle = bAngle + angle / 2.0;
+
+        sAngle = fmod(sAngle + 360.0, 360.0);
+        eAngle = fmod(eAngle + 360.0, 360.0);
+
+        lens.emplace_back(sAngle, eAngle);
     }
+
+    sort(lens.begin(), lens.end());
+
+    int ans = INF;
+    for (int i = 0; i < N; i++)
+    {
+        float a = lens[i].first;
+        float b = lens[i].second;
+        int cnt = 1;
+
+        if (b <= a)
+        {
+            int idx = 0;
+            float m = -1;
+            while (b < a)
+            {
+                while (idx < N && lens[idx].first <= b)
+                {
+                    if (lens[idx].first > lens[idx].second)
+                        m = max(m, lens[idx].second + 360);
+                    else
+                        m = max(m, lens[idx].second);
+                    idx++;
+                }
+
+                if (m <= b)
+                {
+                    cnt = INF;
+                    break;
+                }
+                else
+                {
+                    b = m;
+                    cnt++;
+                }
+            }
+            ans = min(ans, cnt);
+        }
+
+    }
+
+    if (ans != INF)
+        std::cout << ans << endl;
+    else
+        std::cout << "IMPOSSIBLE" << endl;
 }
+
 int32_t main()
 {
     ios_base::sync_with_stdio(false);
