@@ -24,17 +24,14 @@ int emptySize = 0;
 int blockCnt = 0;
 bool Paint(int x, int y, int t, bool state)
 {
-    if (state)
+    for (int i = 0; i < Block[t].size(); i++)
     {
-        for (int i = 0; i < Block[t].size(); i++)
-        {
-            int ax = Block[t][i].second + x;
-            int ay = Block[t][i].first + y;
-            if (0 <= ax && ax < W && 0 <= ay && ay < H)
-                if (state ? MAP[ay][ax] == '.' : MAP[ay][ax] == '#')
-                    continue;
-            return false;
-        }
+        int ax = Block[t][i].second + x;
+        int ay = Block[t][i].first + y;
+        if (0 <= ax && ax < W && 0 <= ay && ay < H)
+            if (state ? MAP[ay][ax] == '.' : MAP[ay][ax] == '#')
+                continue;
+        return false;
     }
 
     for (int i = 0; i < Block[t].size(); i++)
